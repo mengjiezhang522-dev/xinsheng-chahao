@@ -1305,6 +1305,24 @@
       `).join('');
     }
 
+    // Supabase 的 API 默认单次最多返回 1000 行（max-rows），URL 里写 limit=10000 也会被截断。
+    // 这里按页循环拉取，直到取完为止。排序加 id 作为第二键，避免同一时间戳的行在翻页时重复/漏掉。
+    async function fetchAllRegistrations() {
+      const pageSize = 1000;
+      const all = [];
+      let offset = 0;
+      while (true) {
+        const page = await supabaseRequest(
+          `xinsheng_registrations?select=*&order=created_at_china.desc,id.asc&limit=${pageSize}&offset=${offset}`,
+          { timeoutMs: 30000 }
+        );
+        if (!Array.isArray(page) || page.length === 0) break;
+        all.push(...page);
+        offset += page.length;
+      }
+      return all;
+    }
+
     async function refreshFromSupabase(silent = false) {
       if (!authSession) {
         try {
@@ -1316,7 +1334,7 @@
       }
       try {
         const usersData = await supabaseRequest('xinsheng_users?select=id,username,name,email,role,disabled');
-        const regsData = await supabaseRequest('xinsheng_registrations?select=*&order=created_at_china.desc&limit=10000');
+        const regsData = await fetchAllRegistrations();
 
         if (Array.isArray(usersData)) {
           appState.users = usersData.map(mapDbUserToLocal).filter(Boolean);
