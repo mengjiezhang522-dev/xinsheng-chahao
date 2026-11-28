@@ -108,10 +108,6 @@
     .field:hover { border-color: #4c4436; }
     .field:focus { border-color: #d69900; outline: none; background: #201c17; }
 
-    /* ---- 抽屉滑动 ---- */
-    #side-drawer { transition: transform 0.28s cubic-bezier(0.32, 0.72, 0.35, 1); }
-    #side-drawer-backdrop { transition: opacity 0.24s ease; }
-
     /* ---- Toast ---- */
     #toast-banner { transition: transform 0.24s ease, opacity 0.24s ease; }
     #toast-banner.toast-hidden { transform: translateY(12px); opacity: 0; pointer-events: none; }
@@ -131,10 +127,199 @@
     }
     .uppercase-track { letter-spacing: 0.08em; text-transform: uppercase; }
 
-    select.field option { background: #1c1915; color: #f6efe1; }
-  </style>
+    select.field option { background: #ffffff; color: #0f172a; }
+
+    /* Workspace sizing only; colors are controlled exclusively by the theme tokens below. */
+    #workspace-main-content { min-width: 0; }
+    #left-nav-records,#left-nav-lookup,#left-nav-register,#left-nav-security,#left-nav-owner {
+      min-height: 52px; font-size: 15px !important; padding-top: 14px !important; padding-bottom: 14px !important;
+    }
+    #workspace-main-content input,#workspace-main-content select,#workspace-main-content textarea { font-size: 15px; }
+    #workspace-main-content h3,#workspace-main-content h4 { letter-spacing: .01em; }
+    #drawer-panel-lookup,#drawer-panel-register,#drawer-panel-security,#drawer-panel-owner { width: 100%; margin-bottom: 18px; }
+    @media(max-width:1023px) {
+      #workspace-view > div.flex-1 { display: block !important; }
+      #workspace-view nav { position: static !important; margin-bottom: 16px; }
+    }
+
+    /* 登录页独立保留原有深色暖金背景，不受工作台浅色主题影响 */
+    body:has(#auth-view:not(.hidden)) {
+      background:
+        radial-gradient(900px 520px at 14% 8%, rgba(214,153,0,.18), transparent 62%),
+        radial-gradient(760px 460px at 88% 92%, rgba(176,125,0,.13), transparent 58%),
+        linear-gradient(135deg, #11100e 0%, #1b1813 48%, #12110f 100%) !important;
+      color: #f6efe1 !important;
+    }
+    #auth-view {
+      background:
+        radial-gradient(900px 520px at 14% 8%, rgba(214,153,0,.16), transparent 62%),
+        radial-gradient(760px 460px at 88% 92%, rgba(176,125,0,.12), transparent 58%),
+        linear-gradient(135deg, #11100e 0%, #1b1813 48%, #12110f 100%) !important;
+      color: #f6efe1 !important;
+      position: relative;
+      isolation: isolate;
+    }
+    #auth-view > div { width: min(100%, 460px) !important; }
+    #auth-view > div > div {
+      background: rgba(28,25,21,.94) !important;
+      border: 1px solid rgba(214,153,0,.26) !important;
+      border-radius: 22px !important;
+      box-shadow: 0 28px 90px rgba(0,0,0,.58), 0 0 0 1px rgba(246,221,166,.06) inset !important;
+    }
+    #auth-view .micro-label { color: #c7b797 !important; font-size: 13px !important; }
+    #auth-view h1 { color: #f6dda6 !important; font-size: 26px !important; }
+    #auth-view p:not(.micro-label) { color: #c7b797 !important; }
+    #auth-view .field {
+      background: #12110f !important;
+      color: #f6efe1 !important;
+      border: 1px solid #4c4436 !important;
+      border-radius: 12px !important;
+      min-height: 52px;
+      font-size: 16px !important;
+      padding: 13px 15px !important;
+    }
+    #auth-view .field::placeholder { color: #81745f !important; }
+    #auth-view .field:focus { border-color: #d69900 !important; background: #17140f !important; }
+    #auth-view #login-encouragement {
+      background: rgba(214,153,0,.08) !important;
+      border-color: rgba(214,153,0,.28) !important;
+      color: #e6dac2 !important;
+      font-size: 14px !important;
+      line-height: 1.8 !important;
+      padding: 14px 16px !important;
+    }
+    #auth-view #login-form { gap: 22px !important; }
+    #auth-view #login-submit-btn {
+      min-height: 54px;
+      border-radius: 12px !important;
+      font-size: 16px !important;
+      letter-spacing: .04em;
+    }
+    #auth-view #login-db-status { color: #b7aa91 !important; }
+    #auth-view #login-form > div:last-child { border-color: rgba(199,183,151,.18) !important; }
+    #auth-view > div > p:last-child { color: #8f8067 !important; letter-spacing: .12em; }
+    @media (max-width: 520px) {
+      #auth-view { padding: 24px 16px !important; }
+      #auth-view h1 { font-size: 23px !important; }
+      #auth-view > div > div { border-radius: 18px !important; }
+    }
+
+    /* Workspace navigation and readable controls */
+    #left-nav-records,#left-nav-lookup,#left-nav-register,#left-nav-security,#left-nav-owner { min-height:52px; font-size:16px !important; padding-top:14px !important; padding-bottom:14px !important; }
+    #workspace-main-content input,#workspace-main-content select,#workspace-main-content textarea { font-size:15px; }
+    #workspace-main-content h3,#workspace-main-content h4 { letter-spacing:.01em; }
+    #drawer-panel-lookup,#drawer-panel-register,#drawer-panel-security,#drawer-panel-owner { width:100%; margin-bottom:18px; }
+
+    /* ===== Single source of truth: two themes only ===== */
+    body[data-theme="dark"] {
+      color-scheme: dark;
+      --app-bg:#0d1420; --app-bg2:#111b2b; --panel:#172235; --panel2:#1c2a40;
+      --txt:#edf3fb; --muted:#a7b5c9; --border:#354761; --accent:#e9b64f;
+      --accent-soft:rgba(233,182,79,.14); --input:#101a2a; --nav:#141f31;
+      --shadow:0 12px 32px rgba(0,0,0,.24); --control-text:#edf3fb;
+    }
+    body[data-theme="light"] {
+      color-scheme: light;
+      --app-bg:#eef2f7; --app-bg2:#f7f9fc; --panel:#ffffff; --panel2:#f8fafc;
+      --txt:#172338; --muted:#64748b; --border:#d7e0eb; --accent:#b77912;
+      --accent-soft:rgba(183,121,18,.10); --input:#ffffff; --nav:#ffffff;
+      --shadow:0 10px 28px rgba(29,49,78,.07); --control-text:#172338;
+    }
+    body[data-theme] { background:var(--app-bg)!important; color:var(--txt)!important; }
+    body[data-theme] #workspace-view {
+      min-height:100vh; color:var(--txt)!important;
+      background:linear-gradient(135deg,var(--app-bg),var(--app-bg2))!important;
+    }
+    body[data-theme] #workspace-view header,
+    body[data-theme] #workspace-view nav,
+    body[data-theme] #workspace-view #workspace-main-content > .rounded-2xl,
+    body[data-theme] #workspace-view #records-panel-card,
+    body[data-theme] #workspace-view [id^="drawer-panel-"] {
+      color:var(--txt)!important; background:var(--panel)!important;
+      border-color:var(--border)!important; box-shadow:var(--shadow)!important;
+    }
+    body[data-theme] #workspace-view .bg-slate-900,
+    body[data-theme] #workspace-view .bg-slate-950,
+    body[data-theme] #workspace-view [class~="bg-slate-900/70"],
+    body[data-theme] #workspace-view [class~="bg-slate-950/70"],
+    body[data-theme] #workspace-view [class~="bg-slate-900/80"],
+    body[data-theme] #workspace-view [class~="bg-slate-950/50"],
+    body[data-theme] #workspace-view [class~="bg-slate-950/40"] { background:var(--panel2)!important; }
+    body[data-theme] #workspace-view .bg-white,
+    body[data-theme] #workspace-view .team-member-card { background:var(--panel2)!important; }
+    body[data-theme] #workspace-view .text-white,
+    body[data-theme] #workspace-view .text-slate-100,
+    body[data-theme] #workspace-view .text-slate-200,
+    body[data-theme] #workspace-view .text-slate-300,
+    body[data-theme] #workspace-view .text-slate-900,
+    body[data-theme] #workspace-view h2,
+    body[data-theme] #workspace-view h3,
+    body[data-theme] #workspace-view h4,
+    body[data-theme] #workspace-view h5,
+    body[data-theme] #workspace-view label { color:var(--txt)!important; }
+    body[data-theme] #workspace-view .text-slate-400,
+    body[data-theme] #workspace-view .text-slate-500,
+    body[data-theme] #workspace-view .text-slate-600,
+    body[data-theme] #workspace-view .text-slate-700,
+    body[data-theme] #workspace-view .text-slate-800,
+    body[data-theme] #workspace-view .micro-label { color:var(--muted)!important; }
+    body[data-theme] #workspace-view .hairline,
+    body[data-theme] #workspace-view .hairline-soft,
+    body[data-theme] #workspace-view [class*="border-slate-"],
+    body[data-theme] #workspace-view .team-member-card { border-color:var(--border)!important; }
+    body[data-theme] #workspace-view .field,
+    body[data-theme] #workspace-view input:not([type="file"]),
+    body[data-theme] #workspace-view select,
+    body[data-theme] #workspace-view textarea {
+      color:var(--control-text)!important; background:var(--input)!important;
+      border:1px solid var(--border)!important; border-radius:10px!important;
+      color-scheme:inherit;
+    }
+    body[data-theme] #workspace-view select option { color:var(--control-text); background:var(--input); }
+    body[data-theme] #workspace-view input::placeholder,
+    body[data-theme] #workspace-view textarea::placeholder { color:var(--muted)!important; opacity:1; }
+    body[data-theme] #workspace-view input:focus,
+    body[data-theme] #workspace-view select:focus,
+    body[data-theme] #workspace-view textarea:focus {
+      border-color:var(--accent)!important; box-shadow:0 0 0 2px var(--accent-soft)!important; outline:none!important;
+    }
+    body[data-theme] #workspace-view nav button {
+      min-height:50px!important; color:var(--txt)!important; background:transparent!important;
+      border:1px solid transparent!important; border-radius:12px!important;
+    }
+    body[data-theme] #workspace-view nav button:hover,
+    body[data-theme] #workspace-view nav button.is-active {
+      background:var(--accent-soft)!important; border-color:var(--accent)!important;
+    }
+    body[data-theme] #workspace-view .text-amber-200,
+    body[data-theme] #workspace-view .text-amber-300 { color:var(--accent)!important; }
+    body[data-theme] #workspace-view .bg-amber-400,
+    body[data-theme] #workspace-view .bg-amber-500 { background-color:var(--accent)!important; }
+    body[data-theme] #workspace-view .theme-picker-wrap {
+      color:var(--txt); background:var(--panel2); border:1px solid var(--border); border-radius:10px;
+    }
+    body[data-theme] #workspace-view .theme-picker-select {
+      color:var(--txt); background:var(--input); border:1px solid var(--border);
+      border-radius:7px; padding:5px 8px; font-size:13px; cursor:pointer;
+    }
+    body[data-theme] #workspace-view .team-member-card { color:var(--txt)!important; }
+    body[data-theme] #workspace-view .team-member-card :is(strong,span,p,small,label,div) { color:inherit; }
+    body[data-theme] #workspace-view .team-member-card .text-emerald-600,
+    body[data-theme] #workspace-view .team-member-card .text-emerald-700 { color:#34d399!important; }
+    body[data-theme] #workspace-view .team-member-card .text-rose-600,
+    body[data-theme] #workspace-view .team-member-card .text-rose-700 { color:#fb7185!important; }
+    body[data-theme] #workspace-view .team-member-card .bg-amber-50 { background:var(--accent-soft)!important; }
+    body[data-theme] #workspace-view .team-member-card .text-amber-800 { color:var(--accent)!important; }
+    body[data-theme] #workspace-view button { color:inherit; }
+    @media(max-width:900px) {
+      body[data-theme] #workspace-view header>div { height:auto!important; min-height:64px; padding-top:10px; padding-bottom:10px; align-items:flex-start; flex-direction:column; }
+      body[data-theme] #workspace-view header>div>div:last-child { width:100%; justify-content:flex-start; flex-wrap:wrap; overflow:visible; }
+      body[data-theme] #workspace-view #workspace-main-content>.rounded-2xl { padding:18px!important; }
+    }
+
+</style>
 </head>
-<body class="min-h-screen ambience text-slate-100 antialiased">
+<body data-theme="dark" class="min-h-screen ambience text-slate-100 antialiased">
 
   <!-- 全局消息提示条 -->
   <div
@@ -153,7 +338,7 @@
               鑫盛
             </div>
             <div class="min-w-0">
-              <p class="micro-label mb-1">XINSHENG REGISTRY</p>
+              
               <h1 class="text-lg sm:text-xl font-extrabold tracking-wide text-amber-200">鑫盛查号系统</h1>
               <p class="text-xs text-slate-400 mt-0.5">号码 / 电报查重与客户登记工作台</p>
             </div>
@@ -165,7 +350,7 @@
 
         <form id="login-form" onsubmit="handleLoginSubmit(event)" class="px-6 sm:px-8 py-7 space-y-5">
           <div>
-            <label for="login-username" class="micro-label block mb-2">登录账号 / ACCOUNT</label>
+            <label for="login-username" class="micro-label block mb-2">登录账号</label>
             <input
               id="login-username"
               type="text"
@@ -177,7 +362,7 @@
           </div>
 
           <div>
-            <label for="login-password" class="micro-label block mb-2">登录密码 / PASSWORD</label>
+            <label for="login-password" class="micro-label block mb-2">登录密码</label>
             <div class="relative">
               <input
                 id="login-password"
@@ -220,7 +405,7 @@
           </div>
         </form>
       </div>
-      <p class="text-center text-[10px] text-slate-600 mt-4 font-mono tracking-widest uppercase">Secure team workspace · UTC+8</p>
+      <p class="text-center text-[10px] text-slate-600 mt-4 font-mono tracking-widest uppercase">安全团队工作台</p>
     </div>
   </section>
 
@@ -236,7 +421,7 @@
           </span>
           <div class="min-w-0 leading-tight">
             <span class="block font-extrabold text-sm text-amber-200 truncate">鑫盛查号系统</span>
-            <span class="micro-label hidden sm:block">XINSHENG REGISTRY</span>
+            
           </div>
           <span id="header-role-badge" class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] uppercase-track font-bold bg-amber-500/10 text-amber-300 border border-amber-500/25">
             成员
@@ -254,7 +439,13 @@
         </div>
 
         <div class="flex items-center gap-2 flex-1 min-w-0 justify-end overflow-x-auto py-1">
-          <button
+          <label class="theme-picker-wrap inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold whitespace-nowrap">
+            <span aria-hidden="true">◐</span><span>主题</span>
+            <select id="theme-picker" aria-label="选择界面主题" onchange="setAppTheme(this.value)" class="theme-picker-select">
+              <option value="dark">深色</option><option value="light">浅色</option>
+            </select>
+          </label>
+          <button id="header-sync-btn"
             type="button"
             onclick="refreshFromSupabase(false)"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-400/25 text-xs font-semibold transition cursor-pointer whitespace-nowrap"
@@ -262,7 +453,7 @@
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
             同步云端
           </button>
-          <button
+          <button id="header-upload-btn"
             type="button"
             onclick="pushAllLocalToCloud()"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-200 border border-sky-400/25 text-xs font-semibold transition cursor-pointer whitespace-nowrap"
@@ -270,7 +461,7 @@
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
             上传本地到云端
           </button>
-          <button
+          <button id="header-export-btn"
             type="button"
             onclick="exportAllLocalAsSql()"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-200 border border-amber-500/25 text-xs font-semibold transition cursor-pointer whitespace-nowrap"
@@ -278,7 +469,7 @@
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
             导出入库 SQL
           </button>
-          <button
+          <button id="header-copy-link-btn"
             type="button"
             onclick="copyTeamSiteLink()"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-200 border hairline text-xs font-semibold transition cursor-pointer whitespace-nowrap"
@@ -298,11 +489,20 @@
       </div>
     </header>
 
-    <!-- 主体布局：左侧竖排按钮 + 右侧主内容区 -->
+    <!-- 主体布局：固定左侧导航 + 右侧主工作区 -->
     <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex flex-col lg:flex-row gap-6 items-start">
 
-      <!-- 左侧竖排按钮栏 -->
-      <nav aria-label="功能抽屉导航" class="w-full lg:w-52 shrink-0 flex flex-row lg:flex-col gap-2 overflow-x-auto pb-1 lg:pb-0 lg:sticky lg:top-20">
+      <!-- 左侧主导航 -->
+      <nav aria-label="主工作区导航" class="w-full lg:w-60 shrink-0 flex flex-row lg:flex-col gap-2 overflow-x-auto pb-1 lg:pb-0 lg:sticky lg:top-20 rounded-2xl bg-white border border-slate-200 p-3 shadow-sm">
+        <button id="left-nav-dashboard" type="button" onclick="openSideDrawer('dashboard')" class="hidden flex-1 lg:flex-none w-full flex items-center justify-between gap-2 px-3.5 py-3 rounded-xl bg-slate-900 text-slate-100 border hairline text-sm font-bold transition cursor-pointer whitespace-nowrap">
+          <span>▥ 团队数据中心</span><span class="text-amber-400">›</span>
+        </button>
+        <button id="left-nav-audit" type="button" onclick="openSideDrawer('audit')" class="hidden flex-1 lg:flex-none w-full flex items-center justify-between gap-2 px-3.5 py-3 rounded-xl bg-slate-900 hover:bg-amber-500/10 text-slate-100 border hairline text-sm font-bold transition cursor-pointer whitespace-nowrap">
+          <span>▤ 登记操作记录</span><span class="text-amber-400">›</span>
+        </button>
+        <button id="left-nav-records" type="button" onclick="openSideDrawer('records')" class="flex-1 lg:flex-none w-full flex items-center justify-between gap-2 px-3.5 py-3 rounded-xl bg-slate-900 hover:bg-amber-500/10 text-slate-100 border hairline text-sm font-bold transition cursor-pointer whitespace-nowrap">
+          <span>▤ 客户记录库</span><span class="text-amber-400">›</span>
+        </button>
         <button
           id="left-nav-lookup"
           type="button"
@@ -356,8 +556,8 @@
         </button>
       </nav>
 
-      <!-- 右侧主内容区 -->
-      <div class="flex-1 min-w-0 w-full space-y-6">
+      <!-- 右侧主工作区 -->
+      <div id="workspace-main-content" class="flex-1 min-w-0 w-full space-y-6">
 
         <!-- 工作台横幅：问候 + 实时数据状态 -->
         <div class="rounded-2xl bg-slate-900/70 backdrop-blur border hairline p-5 sm:p-6 shadow-panel texture-scan">
@@ -387,7 +587,7 @@
             </div>
 
             <!-- 实时统计 -->
-            <div class="flex items-stretch gap-px rounded-xl overflow-hidden border hairline bg-slate-950/60 shrink-0 self-start sm:self-auto">
+            <div id="banner-stats" class="flex items-stretch gap-px rounded-xl overflow-hidden border hairline bg-slate-950/60 shrink-0 self-start sm:self-auto">
               <div class="px-4 py-2.5 bg-slate-900">
                 <p class="micro-label mb-0.5">总记录</p>
                 <p id="stat-total" class="font-mono font-bold text-amber-300 text-base leading-none">--</p>
@@ -406,8 +606,62 @@
           </div>
         </div>
 
+        <!-- 团队数据分析中心：仅管理层可见，数据来自云端真实登记 -->
+        <section id="drawer-panel-dashboard" class="hidden rounded-2xl bg-slate-900/70 border hairline p-5 sm:p-6 space-y-5 shadow-panel">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div><p class="micro-label mb-1">TEAM ANALYTICS / 团队分析</p><h3 class="text-xl font-extrabold text-amber-200">团队数据中心</h3><p id="dashboard-scope-note" class="text-xs text-slate-400 mt-1">基于云端真实登记数据统计</p></div>
+            <div class="flex flex-wrap gap-2">
+              <select id="dashboard-period" class="field px-3 py-2 text-sm" onchange="renderTeamDashboard()"><option value="today">今天</option><option value="7" selected>最近 7 天</option><option value="30">最近 30 天</option><option value="month">本月</option><option value="all">全部时间</option></select>
+              <button type="button" onclick="renderTeamDashboard()" class="px-3 py-2 rounded-lg border hairline text-sm font-semibold">刷新统计</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 xl:grid-cols-4 gap-3">
+            <div class="rounded-xl border hairline bg-slate-950/50 p-4"><p class="micro-label">新增登记</p><p id="dash-total" class="text-2xl font-extrabold text-amber-300 mt-2">0</p><p class="text-xs text-slate-400 mt-1">所选周期</p></div>
+            <div class="rounded-xl border hairline bg-slate-950/50 p-4"><p class="micro-label">今日新增</p><p id="dash-today" class="text-2xl font-extrabold text-emerald-300 mt-2">0</p><p class="text-xs text-slate-400 mt-1">中国时间 UTC+8</p></div>
+            <div class="rounded-xl border hairline bg-slate-950/50 p-4"><p class="micro-label">活跃登记成员</p><p id="dash-active" class="text-2xl font-extrabold text-sky-300 mt-2">0</p><p class="text-xs text-slate-400 mt-1">所选周期内有新增</p></div>
+            <div class="rounded-xl border hairline bg-slate-950/50 p-4"><p class="micro-label">累计登记</p><p id="dash-all" class="text-2xl font-extrabold text-slate-100 mt-2">0</p><p class="text-xs text-slate-400 mt-1">全量历史记录</p></div>
+          </div>
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <div class="rounded-xl border hairline bg-slate-950/40 p-4"><div class="flex items-center justify-between gap-2 mb-4"><h4 class="font-bold">每日新增趋势</h4><span class="text-xs text-slate-500">最近 7 天</span></div><div id="dash-trend" class="space-y-3"></div></div>
+            <div class="rounded-xl border hairline bg-slate-950/40 p-4"><div class="flex items-center justify-between gap-2 mb-4"><h4 class="font-bold">全公司个人排行榜</h4><span class="text-xs text-slate-500">按新增登记数</span></div><div id="dash-company-ranking" class="space-y-3"></div></div>
+          </div>
+          <div class="rounded-xl border hairline bg-slate-950/40 p-4"><div class="flex items-center justify-between gap-2 mb-4"><h4 class="font-bold">团队 / 小组排行榜</h4><span class="text-xs text-slate-500">按直属管理链分组</span></div><div id="dash-team-ranking" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div></div>
+          <p class="text-xs text-slate-500">统计说明：按登记创建时间计算；重复登记按独立记录计数；查号员不计入业绩排名。排行榜仅用于团队统计，不改变登记归属。</p>
+        </section>
+
+        <!-- 登记操作记录：仅拥有者、管理、组长可见 -->
+        <section id="drawer-panel-audit" class="hidden rounded-2xl bg-slate-900/70 border hairline p-5 sm:p-6 space-y-5 shadow-panel">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <p class="micro-label mb-1">AUDIT / 操作追踪</p>
+              <h3 class="text-xl font-extrabold text-amber-200">登记操作记录</h3>
+              <p id="audit-scope-note" class="text-xs text-slate-400 mt-1">自动记录新增、修改和删除；管理范围按账号权限控制</p>
+            </div>
+            <button type="button" onclick="loadRegistrationAudit()" class="px-3 py-2 rounded-lg border hairline text-sm font-semibold">刷新记录</button>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-[1fr_180px_auto] gap-2">
+            <input id="audit-keyword" type="search" class="field px-3 py-2 text-sm" placeholder="搜索号码、姓名、操作人..." onkeydown="if(event.key==='Enter')loadRegistrationAudit(true)">
+            <select id="audit-action" class="field px-3 py-2 text-sm" onchange="loadRegistrationAudit(true)">
+              <option value="">全部操作</option><option value="INSERT">新增登记</option><option value="UPDATE">修改登记</option><option value="DELETE">删除登记</option>
+            </select>
+            <button type="button" onclick="loadRegistrationAudit(true)" class="px-4 py-2 rounded-lg bg-amber-400 text-slate-950 font-bold text-sm">查询</button>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+            <span id="audit-result-count">等待加载操作记录</span>
+            <span>保留操作人、时间、登记资料及修改前后内容</span>
+          </div>
+          <div id="audit-log-list" class="space-y-3">
+            <div class="rounded-xl border hairline p-5 text-sm text-slate-400">点击刷新记录，查看团队登记操作。</div>
+          </div>
+          <div class="flex items-center justify-between gap-3">
+            <button id="audit-prev-btn" type="button" onclick="changeAuditPage(-1)" class="px-3 py-2 rounded-lg border hairline text-sm" disabled>上一页</button>
+            <span id="audit-page-label" class="text-xs text-slate-400">第 1 页</span>
+            <button id="audit-next-btn" type="button" onclick="changeAuditPage(1)" class="px-3 py-2 rounded-lg border hairline text-sm" disabled>下一页</button>
+          </div>
+        </section>
+
         <!-- 登记记录检索与列表区 -->
-        <div class="rounded-2xl bg-slate-900/70 backdrop-blur border hairline p-5 sm:p-6 space-y-4 shadow-panel">
+        <div id="records-panel-card" class="rounded-2xl bg-slate-900/70 backdrop-blur border hairline p-5 sm:p-6 space-y-4 shadow-panel">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div>
               <p class="micro-label mb-1">REGISTRY / 记录库</p>
@@ -489,370 +743,318 @@
           <div id="records-pagination-bar" class="flex flex-wrap items-center justify-between gap-3 pt-1 text-xs"></div>
         </div>
 
+
+        <!-- 主工作区功能面板：由左侧导航直接切换，不再使用抽屉 -->
+        <div id="drawer-panel-lookup" class="w-full space-y-4 mb-6">
+                <div>
+                  <p class="micro-label mb-1">LOOKUP / 查重</p>
+                  <h4 class="text-base font-extrabold text-amber-200">号码 / 电报查重</h4>
+                  <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                    支持完整号码、任意数字片段（输入 1 位也可匹配）、手机号（如 <code class="text-amber-300 font-mono">+86 13800138001</code>）或电报号（如 <code class="text-amber-300 font-mono">@username</code> 或 <code class="text-amber-300 font-mono">t.me/username</code>）。
+                  </p>
+                </div>
+        
+                <form onsubmit="handleLookupQuery(event)" class="flex gap-2">
+                  <input
+                    id="lookup-query-input"
+                    type="text"
+                    required
+                    placeholder="输入号码片段（1 位起）或电报账号，自动显示连续匹配结果"
+                    class="field flex-1 px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500"
+                  />
+                  <button
+                    type="submit"
+                    class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-glow transition cursor-pointer shrink-0"
+                  >
+                    立即查询
+                  </button>
+                </form>
+        
+                <div id="lookup-result-box" class="rounded-xl bg-slate-900/80 border hairline p-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  请输入号码或电报账号进行查重，系统将自动区分“未登记”、“本人登记”或“他人已登记”。
+                </div>
+                <div id="lookup-live-results" class="hidden mt-3 rounded-xl border hairline overflow-hidden">
+                  <div id="lookup-live-summary" class="px-4 py-3 text-sm font-semibold"></div>
+                  <div id="lookup-live-list" class="max-h-[520px] overflow-y-auto divide-y"></div>
+                  <div id="lookup-live-pagination" class="px-4 py-3 flex items-center justify-between gap-3 text-xs"></div>
+                </div>
+              </div>
+
+        <div id="drawer-panel-register" class="hidden space-y-6">
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h4 id="register-form-title" class="text-base font-extrabold text-amber-200">新增客户登记</h4>
+                      <p class="text-xs text-slate-400 mt-0.5">保存后自动记录中国时间（UTC+8）并实时同步到云端库。</p>
+                    </div>
+                    <button
+                      type="button"
+                      onclick="resetRegistrationForm()"
+                      class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-slate-300 cursor-pointer border hairline transition-colors"
+                    >
+                      重置
+                    </button>
+                  </div>
+        
+                  <form id="registration-form" onsubmit="handleRegistrationSubmit(event)" class="space-y-3.5">
+                    <input id="reg-edit-id" type="hidden" value="" />
+        
+                    <div>
+                      <label for="reg-client-name" class="micro-label block mb-2">登记姓名</label>
+                      <input
+                        id="reg-client-name"
+                        type="text"
+                        placeholder="留空默认填入当前登录账号姓名"
+                        class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
+                      />
+                    </div>
+        
+                    <div>
+                      <label for="reg-contact" class="micro-label block mb-2">客户号码 / 电报账号 *</label>
+                      <input
+                        id="reg-contact"
+                        type="text"
+                        required
+                        placeholder="例如：+86 13800138000 或 @username"
+                        class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
+                      />
+                    </div>
+        
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label for="reg-channel" class="micro-label block mb-2">引流渠道</label>
+                        <select id="reg-channel" class="field w-full px-3 py-2 text-sm text-slate-100 cursor-pointer">
+                          <option value="FB">FB</option>
+                          <option value="TG">TG</option>
+                          <option value="IG">IG</option>
+                          <option value="WA">WA</option>
+                          <option value="SDM">SDM</option>
+                          <option value="AM">AM</option>
+                          <option value="SD">SD</option>
+                          <option value="DMA">DMA</option>
+                          <option value="BD">BD</option>
+                          <option value="POF">POF</option>
+                          <option value="SB">SB</option>
+                          <option value="GLD">GLD</option>
+                          <option value="DIA">DIA</option>
+                          <option value="WYP">WYP</option>
+                          <option value="其他">其他</option>
+                        </select>
+                      </div>
+        
+                      <div>
+                        <label for="reg-status" class="micro-label block mb-2">当前状态</label>
+                        <select id="reg-status" class="field w-full px-3 py-2 text-sm text-slate-100 cursor-pointer">
+                          <option value="在聊">在聊</option>
+                          <option value="深聊">深聊</option>
+                          <option value="断聊">断聊</option>
+                        </select>
+                      </div>
+                    </div>
+        
+                    <div>
+                      <label for="reg-notes" class="micro-label block mb-2">跟进备注</label>
+                      <textarea
+                        id="reg-notes"
+                        rows="3"
+                        placeholder="记录客户背景、需求或跟进进展"
+                        class="field w-full px-3.5 py-3 text-base text-slate-100 placeholder-slate-500 resize-y"
+                      ></textarea>
+                    </div>
+        
+                    <button
+                      id="reg-submit-btn"
+                      type="submit"
+                      class="w-full py-2.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-glow transition cursor-pointer"
+                    >
+                      保存登记（中国时间）
+                    </button>
+                  </form>
+                </div>
+        
+                <!-- 表格文件导入 -->
+                <div class="pt-5 border-t hairline space-y-3">
+                  <div class="flex items-center justify-between gap-2">
+                    <h5 class="text-sm font-bold text-amber-200">导入表格文件（.xlsx / .csv）</h5>
+                    <button
+                      type="button"
+                      onclick="downloadTemplateSampleXlsx()"
+                      class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-amber-200 border border-amber-500/25 cursor-pointer transition-colors"
+                    >
+                      下载模版示例
+                    </button>
+                  </div>
+                  <p class="text-[11px] text-slate-400 leading-relaxed">
+                    支持直接选择 <code class="text-slate-200 font-mono">.xlsx</code> / <code class="text-slate-200 font-mono">.csv</code> 表格导入，自动识别号码、电报、账号、姓名、渠道、状态与备注列并保留重复记录并同步云端。
+                  </p>
+                  <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                    <input
+                      id="excel-file-input"
+                      type="file"
+                      accept=".xlsx,.xls,.csv"
+                      class="flex-1 text-xs text-slate-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-500/15 file:text-amber-200 hover:file:bg-amber-500/25 bg-slate-900 rounded-xl border hairline p-1.5 cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onclick="handleExcelFileImport()"
+                      class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold shadow-glow transition cursor-pointer shrink-0"
+                    >
+                      导入表格
+                    </button>
+                  </div>
+                  <p id="excel-import-summary" class="text-[11px] text-slate-400"></p>
+                </div>
+        
+                <!-- 文本批量导入与名下导出 -->
+                <div class="pt-5 border-t hairline space-y-3">
+                  <div class="flex items-center justify-between gap-2">
+                    <h5 class="text-sm font-bold text-slate-200">文本批量导入号码 / 电报</h5>
+                    <button
+                      type="button"
+                      onclick="exportMyContactsTxt()"
+                      class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-amber-200 border border-amber-500/25 cursor-pointer transition-colors"
+                    >
+                      导出我名下号码 TXT
+                    </button>
+                  </div>
+                  <p class="text-[11px] text-slate-400 leading-relaxed">
+                    每行一条，支持用逗号、竖线或制表符分隔：<br />
+                    <code class="text-slate-300 font-mono">号码或@电报号, 渠道(可选), 状态(在聊/深聊/断聊), 备注(可选)</code>
+                  </p>
+                  <textarea
+                    id="batch-import-textarea"
+                    rows="4"
+                    placeholder="+86 13900139001, FB, 在聊, 潜在客户&#10;@sample_tg01, TG, 深聊, 高意向"
+                    class="field w-full px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 resize-y"
+                  ></textarea>
+                  <button
+                    type="button"
+                    onclick="handleBatchImportContacts()"
+                    class="w-full py-2 px-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-200 border border-amber-500/30 text-xs font-bold transition cursor-pointer"
+                  >
+                    执行批量导入（允许重复登记并同步云端）
+                  </button>
+                </div>
+              </div>
+
+        <div id="drawer-panel-security" class="hidden space-y-4">
+                <div>
+                  <p class="micro-label mb-1">SECURITY / 安全</p>
+                  <h4 class="text-base font-extrabold text-amber-200">账号安全设置</h4>
+                  <p class="text-xs text-slate-400 mt-1">可在此自行绑定或修改邮箱（选填），以及更改当前账号登录密码。</p>
+                </div>
+        
+                <form onsubmit="handleAccountSecuritySubmit(event)" class="space-y-3.5">
+                  <div>
+                    <label for="sec-email" class="micro-label block mb-2">绑定 / 修改邮箱（选填）</label>
+                    <input
+                      id="sec-email"
+                      type="email"
+                      placeholder="输入邮箱地址，留空可解除绑定"
+                      class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
+                    />
+                  </div>
+        
+                  <div>
+                    <label for="sec-current-password" class="micro-label block mb-2">当前密码</label>
+                    <input
+                      id="sec-current-password"
+                      type="password"
+                      autocomplete="current-password"
+                      placeholder="修改密码或更新邮箱前验证当前密码"
+                      class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
+                    />
+                  </div>
+        
+                  <div>
+                    <label for="sec-new-password" class="micro-label block mb-2">新登录密码（选填）</label>
+                    <input
+                      id="sec-new-password"
+                      type="password"
+                      autocomplete="new-password"
+                      placeholder="至少 6 位，不修改密码可留空"
+                      class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
+                    />
+                  </div>
+        
+                  <button
+                    type="submit"
+                    class="w-full py-2.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-glow transition cursor-pointer"
+                  >
+                    保存安全设置
+                  </button>
+                </form>
+              </div>
+
+        <div id="drawer-panel-owner" class="hidden space-y-5">
+                <div>
+                  <p class="micro-label mb-1">TEAM / 团队</p>
+                  <h4 class="text-base font-extrabold text-amber-200">团队与全局管理</h4>
+                  <p class="text-xs text-slate-400 mt-1">仅网站拥有者可见：开通或管理团队成员账号及查看全局登记。</p>
+                </div>
+        
+                <form onsubmit="handleAddTeamMember(event)" class="rounded-xl bg-slate-900/80 border hairline p-4 space-y-3">
+                  <h5 class="text-sm font-bold text-slate-200">添加团队成员账号（无需绑定邮箱）</h5>
+                  <div><label for="new-member-role" class="micro-label block mb-2">职位分配</label>
+                    <select id="new-member-role" class="field w-full px-3 py-2 text-sm text-slate-100">
+                      <option value="member">组员</option><option value="leader">组长</option><option value="manager">管理</option><option value="lookup">查号员（只读）</option>
+                    </select></div>
+                  <div id="new-member-manager-wrap"><label for="new-member-manager" class="micro-label block mb-2">所属团队 / 直属管理或组长</label>
+                    <select id="new-member-manager" class="field w-full px-3 py-2 text-sm text-slate-100"><option value="">无（顶层直属）</option></select></div>
+                  <div>
+                    <label for="new-member-name" class="micro-label block mb-2">成员姓名</label>
+                    <input
+                      id="new-member-name"
+                      type="text"
+                      required
+                      placeholder="例如：张三"
+                      class="field w-full px-3 py-2 text-sm text-slate-100 placeholder-slate-500"
+                    />
+                  </div>
+                  <div>
+                    <label for="new-member-username" class="micro-label block mb-2">登录账号</label>
+                    <input
+                      id="new-member-username"
+                      type="text"
+                      required
+                      placeholder="例如：zhangsan01"
+                      class="field w-full px-3 py-2 text-sm text-slate-100 placeholder-slate-500"
+                    />
+                  </div>
+                  <div>
+                    <label for="new-member-password" class="micro-label block mb-2">初始登录密码（至少 6 位）</label>
+                    <input
+                      id="new-member-password"
+                      type="password"
+                      autocomplete="new-password"
+                      required
+                      placeholder="输入初始密码"
+                      class="field w-full px-3 py-2 text-sm text-slate-100 placeholder-slate-500"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full py-2 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-glow transition cursor-pointer"
+                  >
+                    开通团队成员账号
+                  </button>
+                </form>
+        
+                <div class="space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <h5 class="text-sm font-bold text-slate-200">团队成员列表</h5>
+                    <span id="team-members-count" class="text-xs font-mono text-amber-300">0 名</span>
+                  </div>
+                  <div id="team-members-list" class="space-y-2"></div>
+                </div>
+              </div>
         <footer class="pt-2 pb-4 text-center">
-          <p class="text-[10px] text-slate-600 font-mono tracking-widest uppercase">Xinsheng Registry · Secure team workspace · UTC+8</p>
+          <p class="text-[10px] text-slate-600 font-mono tracking-widest uppercase">Xinsheng Registry · 安全团队工作台</p>
         </footer>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 左侧滑出抽屉 ==================== -->
-  <div
-    id="side-drawer-backdrop"
-    onclick="closeSideDrawer()"
-    class="fixed inset-0 z-40 bg-black/65 backdrop-blur-[2px] opacity-0 pointer-events-none"
-  ></div>
-
-  <aside
-    id="side-drawer"
-    aria-label="左侧功能抽屉"
-    class="fixed top-0 left-0 z-50 h-full w-full max-w-lg bg-slate-950 border-r border-amber-500/25 shadow-panel flex flex-col -translate-x-full"
-  >
-    <div class="px-5 py-4 border-b hairline flex items-center justify-between gap-3 bg-slate-900/80">
-      <div class="flex flex-wrap items-center gap-1.5">
-        <button
-          id="drawer-tab-lookup"
-          type="button"
-          onclick="openSideDrawer('lookup')"
-          class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-amber-400 text-slate-950"
-        >
-          查号 / 电报查重
-        </button>
-        <button
-          id="drawer-tab-register"
-          type="button"
-          onclick="openSideDrawer('register')"
-          class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-slate-900 text-slate-300 hover:text-amber-200 border hairline"
-        >
-          新增/编辑登记
-        </button>
-        <button
-          id="drawer-tab-security"
-          type="button"
-          onclick="openSideDrawer('security')"
-          class="px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-slate-900 text-slate-300 hover:text-amber-200 border hairline"
-        >
-          账号安全
-        </button>
-        <button
-          id="drawer-tab-owner"
-          type="button"
-          onclick="openSideDrawer('owner')"
-          class="hidden px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-amber-500/15 text-amber-300 border border-amber-500/30"
-        >
-          团队管理
-        </button>
-      </div>
-
-      <button
-        type="button"
-        onclick="closeSideDrawer()"
-        class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 text-xs font-bold cursor-pointer shrink-0 border hairline transition-colors"
-      >
-        关闭 ✕
-      </button>
-    </div>
-
-    <div class="flex-1 overflow-y-auto p-5 space-y-6">
-
-      <!-- 面板 1：号码 / 电报查重 -->
-      <div id="drawer-panel-lookup" class="space-y-4">
-        <div>
-          <p class="micro-label mb-1">LOOKUP / 查重</p>
-          <h4 class="text-base font-extrabold text-amber-200">号码 / 电报查重</h4>
-          <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-            支持输入手机号（如 <code class="text-amber-300 font-mono">+86 13800138001</code>）或电报号（如 <code class="text-amber-300 font-mono">@username</code> 或 <code class="text-amber-300 font-mono">t.me/username</code>）。
-          </p>
-        </div>
-
-        <form onsubmit="handleLookupQuery(event)" class="flex gap-2">
-          <input
-            id="lookup-query-input"
-            type="text"
-            required
-            placeholder="输入手机号、@电报号或 t.me/用户名"
-            class="field flex-1 px-3.5 py-2.5 text-sm text-slate-100 placeholder-slate-500"
-          />
-          <button
-            type="submit"
-            class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-glow transition cursor-pointer shrink-0"
-          >
-            立即查询
-          </button>
-        </form>
-
-        <div id="lookup-result-box" class="rounded-xl bg-slate-900/80 border hairline p-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
-          请输入号码或电报账号进行查重，系统将自动区分“未登记”、“本人登记”或“他人已登记”。
-        </div>
-      </div>
-
-      <!-- 面板 2：新增 / 编辑登记 & 批量导入 -->
-      <div id="drawer-panel-register" class="hidden space-y-6">
-        <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <div>
-              <h4 id="register-form-title" class="text-base font-extrabold text-amber-200">新增客户登记</h4>
-              <p class="text-xs text-slate-400 mt-0.5">保存后自动记录中国时间（UTC+8）并实时同步到云端库。</p>
-            </div>
-            <button
-              type="button"
-              onclick="resetRegistrationForm()"
-              class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-slate-300 cursor-pointer border hairline transition-colors"
-            >
-              重置
-            </button>
-          </div>
-
-          <form id="registration-form" onsubmit="handleRegistrationSubmit(event)" class="space-y-3.5">
-            <input id="reg-edit-id" type="hidden" value="" />
-
-            <div>
-              <label for="reg-client-name" class="micro-label block mb-2">登记姓名</label>
-              <input
-                id="reg-client-name"
-                type="text"
-                placeholder="留空默认填入当前登录账号姓名"
-                class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
-              />
-            </div>
-
-            <div>
-              <label for="reg-contact" class="micro-label block mb-2">客户号码 / 电报账号 *</label>
-              <input
-                id="reg-contact"
-                type="text"
-                required
-                placeholder="例如：+86 13800138000 或 @username"
-                class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
-              />
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <div>
-                <label for="reg-channel" class="micro-label block mb-2">引流渠道</label>
-                <select id="reg-channel" class="field w-full px-3 py-2 text-sm text-slate-100 cursor-pointer">
-                  <option value="FB">FB</option>
-                  <option value="TG">TG</option>
-                  <option value="IG">IG</option>
-                  <option value="WA">WA</option>
-                  <option value="SDM">SDM</option>
-                  <option value="AM">AM</option>
-                  <option value="SD">SD</option>
-                  <option value="DMA">DMA</option>
-                  <option value="BD">BD</option>
-                  <option value="POF">POF</option>
-                  <option value="SB">SB</option>
-                  <option value="GLD">GLD</option>
-                  <option value="DIA">DIA</option>
-                  <option value="WYP">WYP</option>
-                  <option value="其他">其他</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="reg-status" class="micro-label block mb-2">当前状态</label>
-                <select id="reg-status" class="field w-full px-3 py-2 text-sm text-slate-100 cursor-pointer">
-                  <option value="在聊">在聊</option>
-                  <option value="深聊">深聊</option>
-                  <option value="断聊">断聊</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label for="reg-notes" class="micro-label block mb-2">跟进备注</label>
-              <textarea
-                id="reg-notes"
-                rows="3"
-                placeholder="记录客户背景、需求或跟进进展"
-                class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500 resize-y"
-              ></textarea>
-            </div>
-
-            <button
-              id="reg-submit-btn"
-              type="submit"
-              class="w-full py-2.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-glow transition cursor-pointer"
-            >
-              保存登记（中国时间）
-            </button>
-          </form>
-        </div>
-
-        <!-- 表格文件导入 -->
-        <div class="pt-5 border-t hairline space-y-3">
-          <div class="flex items-center justify-between gap-2">
-            <h5 class="text-sm font-bold text-amber-200">导入表格文件（.xlsx / .csv）</h5>
-            <button
-              type="button"
-              onclick="downloadTemplateSampleXlsx()"
-              class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-amber-200 border border-amber-500/25 cursor-pointer transition-colors"
-            >
-              下载模版示例
-            </button>
-          </div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            支持直接选择 <code class="text-slate-200 font-mono">.xlsx</code> / <code class="text-slate-200 font-mono">.csv</code> 表格导入，自动识别号码、电报、账号、姓名、渠道、状态与备注列并去重同步云端。
-          </p>
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-            <input
-              id="excel-file-input"
-              type="file"
-              accept=".xlsx,.xls,.csv"
-              class="flex-1 text-xs text-slate-300 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-500/15 file:text-amber-200 hover:file:bg-amber-500/25 bg-slate-900 rounded-xl border hairline p-1.5 cursor-pointer"
-            />
-            <button
-              type="button"
-              onclick="handleExcelFileImport()"
-              class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold shadow-glow transition cursor-pointer shrink-0"
-            >
-              导入表格
-            </button>
-          </div>
-          <p id="excel-import-summary" class="text-[11px] text-slate-400"></p>
-        </div>
-
-        <!-- 文本批量导入与名下导出 -->
-        <div class="pt-5 border-t hairline space-y-3">
-          <div class="flex items-center justify-between gap-2">
-            <h5 class="text-sm font-bold text-slate-200">文本批量导入号码 / 电报</h5>
-            <button
-              type="button"
-              onclick="exportMyContactsTxt()"
-              class="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-xs text-amber-200 border border-amber-500/25 cursor-pointer transition-colors"
-            >
-              导出我名下号码 TXT
-            </button>
-          </div>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            每行一条，支持用逗号、竖线或制表符分隔：<br />
-            <code class="text-slate-300 font-mono">号码或@电报号, 渠道(可选), 状态(在聊/深聊/断聊), 备注(可选)</code>
-          </p>
-          <textarea
-            id="batch-import-textarea"
-            rows="4"
-            placeholder="+86 13900139001, FB, 在聊, 潜在客户&#10;@sample_tg01, TG, 深聊, 高意向"
-            class="field w-full px-3.5 py-2 text-xs text-slate-100 placeholder-slate-500 resize-y"
-          ></textarea>
-          <button
-            type="button"
-            onclick="handleBatchImportContacts()"
-            class="w-full py-2 px-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-200 border border-amber-500/30 text-xs font-bold transition cursor-pointer"
-          >
-            执行批量导入（自动去重并同步云端）
-          </button>
-        </div>
-      </div>
-
-      <!-- 面板 3：账号安全设置 -->
-      <div id="drawer-panel-security" class="hidden space-y-4">
-        <div>
-          <p class="micro-label mb-1">SECURITY / 安全</p>
-          <h4 class="text-base font-extrabold text-amber-200">账号安全设置</h4>
-          <p class="text-xs text-slate-400 mt-1">可在此自行绑定或修改邮箱（选填），以及更改当前账号登录密码。</p>
-        </div>
-
-        <form onsubmit="handleAccountSecuritySubmit(event)" class="space-y-3.5">
-          <div>
-            <label for="sec-email" class="micro-label block mb-2">绑定 / 修改邮箱（选填）</label>
-            <input
-              id="sec-email"
-              type="email"
-              placeholder="输入邮箱地址，留空可解除绑定"
-              class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
-            />
-          </div>
-
-          <div>
-            <label for="sec-current-password" class="micro-label block mb-2">当前密码</label>
-            <input
-              id="sec-current-password"
-              type="password"
-              autocomplete="current-password"
-              placeholder="修改密码或更新邮箱前验证当前密码"
-              class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
-            />
-          </div>
-
-          <div>
-            <label for="sec-new-password" class="micro-label block mb-2">新登录密码（选填）</label>
-            <input
-              id="sec-new-password"
-              type="password"
-              autocomplete="new-password"
-              placeholder="至少 6 位，不修改密码可留空"
-              class="field w-full px-3.5 py-2 text-sm text-slate-100 placeholder-slate-500"
-            />
-          </div>
-
-          <button
-            type="submit"
-            class="w-full py-2.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm shadow-glow transition cursor-pointer"
-          >
-            保存安全设置
-          </button>
-        </form>
-      </div>
-
-      <!-- 面板 4：团队管理（仅网站拥有者可见） -->
-      <div id="drawer-panel-owner" class="hidden space-y-5">
-        <div>
-          <p class="micro-label mb-1">TEAM / 团队</p>
-          <h4 class="text-base font-extrabold text-amber-200">团队与全局管理</h4>
-          <p class="text-xs text-slate-400 mt-1">仅网站拥有者可见：开通或管理团队成员账号及查看全局登记。</p>
-        </div>
-
-        <form onsubmit="handleAddTeamMember(event)" class="rounded-xl bg-slate-900/80 border hairline p-4 space-y-3">
-          <h5 class="text-sm font-bold text-slate-200">添加团队成员账号（无需绑定邮箱）</h5>
-          <div>
-            <label for="new-member-name" class="micro-label block mb-2">成员姓名</label>
-            <input
-              id="new-member-name"
-              type="text"
-              required
-              placeholder="例如：张三"
-              class="field w-full px-3 py-2 text-sm text-slate-100 placeholder-slate-500"
-            />
-          </div>
-          <div>
-            <label for="new-member-username" class="micro-label block mb-2">登录账号</label>
-            <input
-              id="new-member-username"
-              type="text"
-              required
-              placeholder="例如：zhangsan01"
-              class="field w-full px-3 py-2 text-sm text-slate-100 placeholder-slate-500"
-            />
-          </div>
-          <div>
-            <label for="new-member-password" class="micro-label block mb-2">初始登录密码（至少 6 位）</label>
-            <input
-              id="new-member-password"
-              type="password"
-              autocomplete="new-password"
-              required
-              placeholder="输入初始密码"
-              class="field w-full px-3 py-2 text-sm text-slate-100 placeholder-slate-500"
-            />
-          </div>
-          <button
-            type="submit"
-            class="w-full py-2 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-glow transition cursor-pointer"
-          >
-            开通团队成员账号
-          </button>
-        </form>
-
-        <div class="space-y-2.5">
-          <div class="flex items-center justify-between">
-            <h5 class="text-sm font-bold text-slate-200">团队成员列表</h5>
-            <span id="team-members-count" class="text-xs font-mono text-amber-300">0 名</span>
-          </div>
-          <div id="team-members-list" class="space-y-2"></div>
-        </div>
-      </div>
-    </div>
-  </aside>
 
   <script>
     const SUPABASE_CONFIG = {
@@ -924,9 +1126,180 @@
       if (digits.length === 13 && digits.startsWith('86')) {
         digits = digits.slice(2);
       }
-      if (digits.length >= 6) return `ph:${digits}`;
+      if (digits.length >= 1) return `ph:${digits}`;
       const fallback = s.replace(/[^a-z0-9_]/g, '');
       return fallback.length >= 4 ? `tg:${fallback}` : '';
+    }
+
+
+    function getPhoneSearchVariants(value) {
+      const digits = String(value || '').replace(/\D/g, '');
+      if (!digits) return [];
+      const variants = new Set([digits]);
+      // North American numbers: 10-digit national format and 1 + 10-digit international format.
+      if (digits.length === 11 && digits.startsWith('1')) variants.add(digits.slice(1));
+      if (digits.length === 10) variants.add('1' + digits);
+      // China mobile numbers may be stored with or without +86.
+      if (digits.length === 13 && digits.startsWith('86')) variants.add(digits.slice(2));
+      if (digits.length === 11 && digits.startsWith('86')) variants.add(digits.slice(2));
+      return Array.from(variants);
+    }
+
+    function getTelegramSearchText(value) {
+      let s = String(value || '').trim().toLowerCase();
+      const link = s.match(/(?:https?:\/\/)?(?:t\.me|telegram\.me|telegram\.dog)\/([a-z0-9_]+)/i);
+      if (link) return link[1].toLowerCase();
+      return s.replace(/^@+/, '').replace(/[^a-z0-9_]/g, '');
+    }
+
+    function lookupRecordMatchesQuery(record, rawQuery) {
+      const query = String(rawQuery || '').trim();
+      if (!query || !record) return false;
+      const qDigits = query.replace(/\D/g, '');
+      const isPhoneQuery = qDigits.length > 0 && !/[a-z_@]/i.test(query);
+      if (isPhoneQuery) {
+        // 查询片段按用户实际输入保持连续；只扩展登记号码的等价格式，
+        // 避免把“13”错误降级成“3”而产生非连续/过宽匹配。
+        const storedVariants = getPhoneSearchVariants(record.contact);
+        return storedVariants.some(stored => stored.includes(qDigits));
+      }
+      const qHandle = getTelegramSearchText(query);
+      const storedHandle = getTelegramSearchText(record.contact);
+      if (qHandle) return Boolean(storedHandle && storedHandle.includes(qHandle));
+      return normalizeLookupKey(record.contact) === normalizeLookupKey(query);
+    }
+
+    let lookupLivePage = 1;
+    let lookupLiveMatches = [];
+    let lookupLiveQuery = '';
+    let lookupLiveServerMode = false;
+    let lookupLiveTotal = 0;
+    let lookupLiveRequestSeq = 0;
+    const LOOKUP_LIVE_PAGE_SIZE = 100;
+
+    function setLookupLivePage(page) {
+      const total = lookupLiveServerMode ? lookupLiveTotal : lookupLiveMatches.length;
+      const totalPages = Math.max(1, Math.ceil(total / LOOKUP_LIVE_PAGE_SIZE));
+      lookupLivePage = Math.min(Math.max(1, Number(page) || 1), totalPages);
+      if (lookupLiveServerMode) fetchLookupLiveResults(lookupLiveQuery, lookupLivePage);
+      else renderLookupLiveResults(lookupLiveQuery);
+    }
+
+    async function fetchLookupLiveResults(rawQuery, page=1) {
+      const query=String(rawQuery||'').trim();
+      const wrap=document.getElementById('lookup-live-results');
+      const summary=document.getElementById('lookup-live-summary');
+      const list=document.getElementById('lookup-live-list');
+      const pager=document.getElementById('lookup-live-pagination');
+      if(!wrap||!summary||!list||!pager)return;
+      if(!query){wrap.classList.add('hidden');lookupLiveMatches=[];lookupLiveTotal=0;lookupLiveQuery='';return;}
+      const seq=++lookupLiveRequestSeq;
+      lookupLiveServerMode=true; lookupLiveQuery=query; lookupLivePage=page;
+      wrap.classList.remove('hidden');
+      summary.textContent='正在安全查询云端匹配记录…'; list.innerHTML=''; pager.innerHTML='';
+      try {
+        const data=await supabaseRequest('rpc/xs_lookup_registrations',{method:'POST',body:JSON.stringify({p_query:query,p_offset:(page-1)*LOOKUP_LIVE_PAGE_SIZE,p_limit:LOOKUP_LIVE_PAGE_SIZE})});
+        if(seq!==lookupLiveRequestSeq)return;
+        lookupLiveTotal=Number(data?.total||0);
+        lookupLiveMatches=(Array.isArray(data?.rows)?data.rows:[]).map(mapDbRegToLocal).filter(Boolean);
+        renderLookupLiveResults(query);
+      } catch(err) {
+        if(seq!==lookupLiveRequestSeq)return;
+        summary.textContent='云端查询失败';
+        list.innerHTML=`<div class="px-4 py-5 text-sm text-rose-400">${escapeHtml(err.message||'请检查网络后重试')}</div>`;
+        pager.innerHTML='';
+      }
+    }
+
+    function renderLookupLiveResults(rawQuery) {
+      const wrap = document.getElementById('lookup-live-results');
+      const summary = document.getElementById('lookup-live-summary');
+      const list = document.getElementById('lookup-live-list');
+      const pager = document.getElementById('lookup-live-pagination');
+      const query = String(rawQuery || '').trim();
+      if (!wrap || !summary || !list || !pager) return;
+      if (!query) {
+        wrap.classList.add('hidden');
+        lookupLiveMatches = [];
+        lookupLiveQuery = '';
+        return;
+      }
+      lookupLiveQuery = query;
+      const user = getCurrentAuthenticatedUser();
+      if(lookupLiveServerMode) {
+        const total=lookupLiveTotal;
+        const totalPages=Math.max(1,Math.ceil(total/LOOKUP_LIVE_PAGE_SIZE));
+        lookupLivePage=Math.min(lookupLivePage,totalPages);
+        const start=(lookupLivePage-1)*LOOKUP_LIVE_PAGE_SIZE;
+        const pageRows=lookupLiveMatches;
+        wrap.classList.remove('hidden');
+        const digits=query.replace(/\D/g,'');
+        const hint=digits && !/[a-z_@]/i.test(query) ? `号码连续包含数字片段「${escapeHtml(digits)}」` : `电报账号连续包含「${escapeHtml(query.replace(/^@+/,''))}」`;
+        summary.innerHTML=`<div class="flex flex-wrap items-center justify-between gap-2"><span>${hint}</span><span class="font-mono">匹配 ${total.toLocaleString()} 条</span></div><p class="mt-1 text-xs font-normal opacity-75">安全云端分页查询；支持不同国家代码写法，重复登记逐条显示。</p>`;
+        if(!total){list.innerHTML='<div class="px-4 py-5 text-sm">当前没有匹配记录。请继续输入或检查号码 / 电报账号。</div>';pager.innerHTML='';return;}
+        list.innerHTML=pageRows.map(m=>{const mine=user&&m.ownerId===user.id;return `<div class="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div class="min-w-0"><div class="font-mono font-bold text-sm break-all">${escapeHtml(m.contact)}</div><div class="mt-1 text-xs opacity-75">登记姓名：${escapeHtml(m.clientName)} · 登记人：${escapeHtml(m.ownerName)} · 渠道：${escapeHtml(m.channel)}</div>${m.notes?`<div class="mt-1 text-xs opacity-75">备注：${escapeHtml(m.notes)}</div>`:''}</div><div class="flex flex-wrap items-center gap-2 shrink-0 text-xs"><span class="rounded-full px-2.5 py-1 border">${escapeHtml(m.status)}</span><span class="rounded-full px-2.5 py-1 border ${mine?'border-emerald-500/40 text-emerald-300':'border-amber-500/40 text-amber-300'}">${mine?'本人登记':'他人已登记'}</span><span class="opacity-65">${escapeHtml(m.createdAtChina)}</span></div></div>`;}).join('');
+        pager.innerHTML=`<span>显示 ${start+1}-${Math.min(start+pageRows.length,total)} / ${total} 条</span><div class="flex items-center gap-2"><button type="button" ${lookupLivePage<=1?'disabled':''} onclick="setLookupLivePage(${lookupLivePage-1})" class="px-3 py-1.5 rounded-lg border disabled:opacity-40">上一页</button><span>${lookupLivePage} / ${totalPages}</span><button type="button" ${lookupLivePage>=totalPages?'disabled':''} onclick="setLookupLivePage(${lookupLivePage+1})" class="px-3 py-1.5 rounded-lg border disabled:opacity-40">下一页</button></div>`;
+        return;
+      }
+      lookupLiveServerMode=false;
+      lookupLiveMatches = (Array.isArray(appState.registrations) ? appState.registrations : [])
+        .filter(record => lookupRecordMatchesQuery(record, query))
+        .sort((a,b) => String(b.createdAtChina || '').localeCompare(String(a.createdAtChina || '')));
+      const total = lookupLiveMatches.length;
+      const totalPages = Math.max(1, Math.ceil(total / LOOKUP_LIVE_PAGE_SIZE));
+      lookupLivePage = Math.min(lookupLivePage, totalPages);
+      const start = (lookupLivePage - 1) * LOOKUP_LIVE_PAGE_SIZE;
+      const pageRows = lookupLiveMatches.slice(start, start + LOOKUP_LIVE_PAGE_SIZE);
+      wrap.classList.remove('hidden');
+
+      const digits = query.replace(/\D/g, '');
+      const hint = digits && !/[a-z_@]/i.test(query)
+        ? `号码连续包含数字片段「${escapeHtml(digits)}」`
+        : `电报账号连续包含「${escapeHtml(query.replace(/^@+/, ''))}」`;
+      summary.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span>${hint}</span>
+          <span class="font-mono">匹配 ${total.toLocaleString()} 条</span>
+        </div>
+        <p class="mt-1 text-xs font-normal opacity-75">输入时自动更新；支持 +1 / 1 / 不带国家代码的号码格式，重复登记也会分别显示。</p>`;
+      if (!total) {
+        list.innerHTML = `<div class="px-4 py-5 text-sm">当前没有匹配记录。请继续输入或检查号码/电报账号。</div>`;
+        pager.innerHTML = '';
+        return;
+      }
+      list.innerHTML = pageRows.map((m, i) => {
+        const mine = user && m.ownerId === user.id;
+        return `<div class="px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div class="min-w-0">
+            <div class="font-mono font-bold text-sm break-all">${escapeHtml(m.contact)}</div>
+            <div class="mt-1 text-xs opacity-75">登记姓名：${escapeHtml(m.clientName)} · 登记人：${escapeHtml(m.ownerName)} · 渠道：${escapeHtml(m.channel)}</div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 text-xs">
+            <span class="rounded-full px-2.5 py-1 border">${escapeHtml(m.status)}</span>
+            <span class="rounded-full px-2.5 py-1 border ${mine ? 'border-emerald-500/40' : 'border-amber-500/40'}">${mine ? '本人登记' : '已登记'}</span>
+            <span class="opacity-65">${escapeHtml(m.createdAtChina)}</span>
+          </div>
+        </div>`;
+      }).join('');
+      pager.innerHTML = `
+        <span>显示 ${start + 1}-${Math.min(start + pageRows.length, total)} / ${total} 条</span>
+        <div class="flex items-center gap-2">
+          <button type="button" ${lookupLivePage <= 1 ? 'disabled' : ''} onclick="setLookupLivePage(${lookupLivePage - 1})" class="px-3 py-1.5 rounded-lg border disabled:opacity-40">上一页</button>
+          <span>${lookupLivePage} / ${totalPages}</span>
+          <button type="button" ${lookupLivePage >= totalPages ? 'disabled' : ''} onclick="setLookupLivePage(${lookupLivePage + 1})" class="px-3 py-1.5 rounded-lg border disabled:opacity-40">下一页</button>
+        </div>`;
+    }
+
+    let lookupLiveTimer = null;
+    function handleLookupInput() {
+      const input = document.getElementById('lookup-query-input');
+      if (!input) return;
+      if (lookupLiveTimer) clearTimeout(lookupLiveTimer);
+      lookupLiveTimer = setTimeout(() => {
+        lookupLivePage = 1;
+        const user=getCurrentAuthenticatedUser();
+        if(user) fetchLookupLiveResults(input.value,1);
+      }, 120);
     }
 
     function escapeHtml(str) {
@@ -943,9 +1316,31 @@
       return { users: [], registrations: [], sessionUserId: null };
     }
 
+
+    const APP_THEME_KEY = 'xinsheng_ui_theme_v3';
+    function setAppTheme(theme, silent = false) {
+      const allowed = ['dark', 'light'];
+      const next = allowed.includes(theme) ? theme : 'dark';
+      document.body.dataset.theme = next;
+      try { localStorage.setItem(APP_THEME_KEY, next); } catch (e) {}
+      const picker = document.getElementById('theme-picker');
+      if (picker) picker.value = next;
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = next === 'light' ? '#eef2f7' : '#0d1420';
+      if (!silent && typeof showToast === 'function') {
+        const labels = { dark: '深色', light: '浅色' };
+        showToast(`已切换为${labels[next]}主题`);
+      }
+    }
+    (function initAppTheme() {
+      let saved = 'dark';
+      try { saved = localStorage.getItem(APP_THEME_KEY) || 'dark'; } catch (e) {}
+      document.body.dataset.theme = ['dark', 'light'].includes(saved) ? saved : 'dark';
+    })();
+
     let appState = loadInitialState();
     let cloudReady = false;
-    let activeDrawerTab = 'lookup';
+    let activeDrawerTab = null;
     let currentPage = 1;
     let initialCloudLoad = true;
     const expandedRowIds = new Set();
@@ -968,11 +1363,12 @@
       const mineEl = document.getElementById('stat-mine');
       const todayEl = document.getElementById('stat-today');
       if (!user || !totalEl) return;
-      const regs = Array.isArray(appState.registrations) ? appState.registrations : [];
+      const allRegs = Array.isArray(appState.registrations) ? appState.registrations : [];
+      const regs = user.role==='lookup' ? [] : allRegs.filter(r=>canViewRegistration(user,r));
       const today = getChinaTimeString(new Date()).slice(0, 10);
       const mine = regs.filter((r) => r.ownerId === user.id);
       const todayCount = regs.filter((r) => String(r.createdAtChina || '').startsWith(today)).length;
-      totalEl.textContent = String(regs.length);
+      totalEl.textContent = user.role==='lookup' ? '—' : String(regs.length);
       mineEl.textContent = String(mine.length);
       todayEl.textContent = String(todayCount);
     }
@@ -1009,20 +1405,28 @@
 
     async function authFetch(path, method, body, token) {
       const key = SUPABASE_CONFIG.anonKey;
-      const res = await fetch(`${SUPABASE_CONFIG.url}/auth/v1/${path}`, {
-        method,
-        headers: { apikey: key, Authorization: `Bearer ${token || key}`, 'Content-Type': 'application/json' },
-        body: body ? JSON.stringify(body) : undefined
-      });
-      const text = await res.text();
-      let data = null;
-      try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
-      if (!res.ok) {
-        const err = new Error((data && (data.msg || data.error_description || data.message)) || `HTTP ${res.status}`);
-        err.status = res.status;
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 12000);
+      try {
+        const res = await fetch(`${SUPABASE_CONFIG.url}/auth/v1/${path}`, {
+          method,
+          headers: { apikey: key, Authorization: `Bearer ${token || key}`, 'Content-Type': 'application/json' },
+          body: body ? JSON.stringify(body) : undefined,
+          signal: controller.signal
+        });
+        const text = await res.text();
+        let data = null;
+        try { data = text ? JSON.parse(text) : null; } catch (e) { data = null; }
+        if (!res.ok) {
+          const err = new Error((data && (data.msg || data.error_description || data.message)) || `HTTP ${res.status}`);
+          err.status = res.status;
+          throw err;
+        }
+        return data;
+      } catch (err) {
+        if (err && err.name === 'AbortError') throw new Error('Supabase 登录请求超时（12 秒），请检查网络后重试');
         throw err;
-      }
-      return data;
+      } finally { clearTimeout(timer); }
     }
 
     async function passwordLogin(username, password) {
@@ -1099,7 +1503,8 @@
         username: String(row.username || ''),
         name: String(row.name || row.username || ''),
         email: String(row.email || ''),
-        role: row.role === 'owner' ? 'owner' : 'member',
+        role: ['owner','manager','leader','member','lookup'].includes(row.role) ? row.role : 'member',
+        managerId: String(row.manager_id || ''),
         disabled: Boolean(row.disabled)
       };
     }
@@ -1110,7 +1515,8 @@
         username: String(user.username || ''),
         name: String(user.name || user.username || ''),
         email: String(user.email || ''),
-        role: user.role === 'owner' ? 'owner' : 'member',
+        role: ['owner','manager','leader','member','lookup'].includes(user.role) ? user.role : 'member',
+        manager_id: String(user.managerId || ''),
         disabled: Boolean(user.disabled)
       };
     }
@@ -1210,47 +1616,96 @@
       showToast('账号安全设置已保存');
     }
 
+    function roleIsLookupCreationBlocked(actor) { return Boolean(actor && actor.role !== 'owner' && document.getElementById('new-member-role')?.value === 'lookup'); }
+
     async function handleAddTeamMember(event) {
       if (event) event.preventDefault();
-      const owner = getCurrentAuthenticatedUser();
-      if (!isSiteOwner(owner)) { showToast('仅网站拥有者可开通成员账号'); return; }
-
-      const nameInput = document.getElementById('new-member-name');
-      const userInput = document.getElementById('new-member-username');
-      const pwdInput = document.getElementById('new-member-password');
-
-      const name = (nameInput?.value || '').trim();
-      const username = (userInput?.value || '').trim();
-      const password = pwdInput?.value || '';
-
-      if (!name || !username) { showToast('请填写成员姓名与登录账号'); return; }
+      const actor = getCurrentAuthenticatedUser();
+      if (!canManageTeam(actor) || (roleIsLookupCreationBlocked(actor))) { showToast('无权开通团队账号'); return; }
+      const name = (document.getElementById('new-member-name')?.value || '').trim();
+      const username = (document.getElementById('new-member-username')?.value || '').trim().toLowerCase();
+      const password = document.getElementById('new-member-password')?.value || '';
+      const role = document.getElementById('new-member-role')?.value || 'member';
+      const managerId = document.getElementById('new-member-manager')?.value || (actor.role === 'owner' ? '' : actor.id);
+      if (!name || !username) { showToast('请填写姓名和账号'); return; }
       if (password.length < 8) { showToast('初始密码至少需要 8 位'); return; }
-      if (!/^[a-z0-9_.-]{3,30}$/.test(username.toLowerCase())) { showToast('登录账号需为 3-30 位字母、数字、下划线、点或横线'); return; }
-
-      const existed = appState.users.some((u) => u.username.toLowerCase() === username.toLowerCase());
-      if (existed) { showToast('该登录账号已存在，请换一个账号名'); return; }
-
+      if (!/^[a-z0-9_.-]{3,30}$/.test(username)) { showToast('账号需为 3-30 位字母、数字、下划线、点或横线'); return; }
+      if (appState.users.some(u => u.username.toLowerCase() === username)) { showToast('该登录账号已存在'); return; }
       try {
-        await supabaseRequest('rpc/xs_create_member', {
-          method: 'POST',
-          body: JSON.stringify({ p_username: username, p_password: password, p_name: name })
+        await supabaseRequest('rpc/xs_create_team_user', {
+          method:'POST',
+          body:JSON.stringify({p_username:username,p_password:password,p_name:name,p_role:role,p_manager_id:managerId || null})
         });
-      } catch (e) {
-        showToast('开通失败：' + ((e.message || '').replace(/^HTTP \d+ /, '') || '请重试'));
+        await refreshFromSupabase(true);
+        ['new-member-name','new-member-username','new-member-password'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+        renderTeamMembersList();
+        showToast(`已开通${roleLabel(role)}账号：${name}`);
+      } catch(e) { showToast('开通失败：'+((e.message||'').replace(/^HTTP \\d+ /,'')||'请重试')); }
+    }
+
+    function roleLabel(role) { return ({owner:'网站拥有者',manager:'管理',leader:'组长',member:'组员',lookup:'查号员（只读）'})[role] || '组员'; }
+
+    async function updateTeamMemberRole(userId, role) {
+      const actor=getCurrentAuthenticatedUser();
+      const target=appState.users.find(u=>u.id===userId);
+      if(!canManageUser(actor,target)) { showToast('无权调整该成员职位'); renderTeamMembersList(); return; }
+      try {
+        await supabaseRequest('rpc/xs_set_team_role',{method:'POST',body:JSON.stringify({p_user_id:userId,p_role:role,p_manager_id:actor.role==='owner' ? (target.managerId || null) : actor.id})});
+        await refreshFromSupabase(true); renderTeamMembersList(); showToast('成员职位已更新');
+      } catch(e) { showToast('职位调整失败：'+(e.message||'请重试')); renderTeamMembersList(); }
+    }
+
+    async function updateTeamMemberManager(userId, managerId) {
+      const actor = getCurrentAuthenticatedUser();
+      const target = appState.users.find(u => u.id === userId);
+      if (!isSiteOwner(actor) || !target || target.role === 'owner') {
+        showToast('只有网站拥有者可以调整成员所属团队');
+        renderTeamMembersList();
         return;
       }
-      await refreshFromSupabase(true);
+      const nextManagerId = managerId || null;
+      if (nextManagerId === userId) {
+        showToast('成员不能将自己设为直属上级');
+        renderTeamMembersList();
+        return;
+      }
+      const parent = nextManagerId ? appState.users.find(u => u.id === nextManagerId && !u.disabled && ['manager','leader'].includes(u.role)) : null;
+      if (nextManagerId && !parent) {
+        showToast('请选择有效的管理或组长账号');
+        renderTeamMembersList();
+        return;
+      }
+      try {
+        await supabaseRequest('rpc/xs_set_team_role', {
+          method: 'POST',
+          body: JSON.stringify({ p_user_id: userId, p_role: target.role, p_manager_id: nextManagerId })
+        });
+        await refreshFromSupabase(true);
+        renderTeamMembersList();
+        showToast('成员所属团队已更新');
+      } catch (e) {
+        showToast('调整所属团队失败：' + (e.message || '请重试'));
+        renderTeamMembersList();
+      }
+    }
 
-      if (nameInput) nameInput.value = '';
-      if (userInput) userInput.value = '';
-      if (pwdInput) pwdInput.value = '';
-      renderTeamMembersList();
-      showToast(`已开通成员账号：${name}（${username}）`);
+    async function resetTeamMemberPassword(userId) {
+      const actor=getCurrentAuthenticatedUser();
+      const target=appState.users.find(u=>u.id===userId);
+      if(!canManageUser(actor,target)) { showToast('无权修改该成员密码'); return; }
+      const pwd=window.prompt(`为 ${target.name} 设置新密码（至少 8 位）`);
+      if(pwd===null) return;
+      if(pwd.length<8) { showToast('新密码至少需要 8 位'); return; }
+      try {
+        await supabaseRequest('rpc/xs_admin_reset_password',{method:'POST',body:JSON.stringify({p_user_id:userId,p_new_password:pwd})});
+        showToast('密码已重置；该成员的其他登录会话已失效');
+      } catch(e) { showToast('密码重置失败：'+(e.message||'请重试')); }
     }
 
     async function toggleTeamMemberDisabled(userId) {
       const owner = getCurrentAuthenticatedUser();
-      if (!isSiteOwner(owner)) return;
+      const targetUser = appState.users.find(u => u.id === userId);
+      if (!canManageUser(owner,targetUser) || !isSiteOwner(owner)) { showToast('仅网站拥有者可停用或启用账号'); return; }
       const idx = appState.users.findIndex((u) => u.id === userId && u.role !== 'owner');
       if (idx === -1) return;
 
@@ -1262,47 +1717,28 @@
     }
 
     function renderTeamMembersList() {
-      const container = document.getElementById('team-members-list');
-      const countEl = document.getElementById('team-members-count');
-      if (!container) return;
-
-      const members = appState.users.filter((u) => u.role !== 'owner');
-      if (countEl) countEl.textContent = `${members.length} 名`;
-
-      if (!members.length) {
-        container.innerHTML = `
-          <div class="p-4 rounded-xl border border-dashed border-slate-700 text-xs text-slate-400 text-center leading-relaxed">
-            尚未开通团队成员账号，可在上方表单中添加。
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = members.map((m) => `
-        <div class="p-3 rounded-xl bg-slate-900/85 border hairline flex items-center justify-between gap-2 text-xs">
-          <div class="min-w-0">
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-slate-100 truncate">${escapeHtml(m.name)}</span>
-              <span class="font-mono text-amber-300 truncate">@${escapeHtml(m.username)}</span>
-            </div>
-            <p class="text-[11px] text-slate-400 mt-0.5">
-              状态：${m.disabled ? '<span class="text-rose-400">已停用</span>' : '<span class="text-emerald-400">正常</span>'}
-              ${m.email ? ` · 邮箱：${escapeHtml(m.email)}` : ''}
-            </p>
-          </div>
-          <button
-            type="button"
-            onclick="toggleTeamMemberDisabled('${escapeHtml(m.id)}')"
-            class="px-2.5 py-1 rounded-lg ${
-              m.disabled
-                ? 'bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-400/30'
-                : 'bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-400/30'
-            } text-[11px] font-bold cursor-pointer shrink-0 transition-colors"
-          >
-            ${m.disabled ? '启用' : '停用'}
-          </button>
-        </div>
-      `).join('');
+      const container=document.getElementById('team-members-list');
+      const countEl=document.getElementById('team-members-count');
+      if(!container) return;
+      const actor=getCurrentAuthenticatedUser();
+      const members=appState.users.filter(u=>u.role!=='owner' && (isSiteOwner(actor) || u.managerId===actor.id || (actor.role==='manager' && appState.users.some(m=>m.id===u.managerId && m.managerId===actor.id))));
+      if(countEl) countEl.textContent=`${members.length} 名`;
+      if(!members.length) { container.innerHTML='<div class="p-4 rounded-xl border border-dashed text-sm text-slate-500 text-center">暂无直属团队成员。</div>'; return; }
+      container.innerHTML=members.map(m=>{
+        const manageable=canManageUser(actor,m);
+        const directManage=isSiteOwner(actor) || m.managerId===actor.id;
+        const roleOptions=['manager','leader','member','lookup'].filter(role=>actor.role==='owner' || !['manager','lookup'].includes(role)).map(role=>`<option value="${role}" ${m.role===role?'selected':''}>${roleLabel(role)}</option>`).join('');
+        const teamOptions = isSiteOwner(actor)
+          ? `<option value="">无直属上级</option>` + appState.users.filter(u=>u.id!==m.id && ['manager','leader'].includes(u.role) && !u.disabled).map(u=>`<option value="${escapeHtml(u.id)}" ${m.managerId===u.id?'selected':''}>${escapeHtml(u.name)}（${roleLabel(u.role)}）</option>`).join('')
+          : '';
+        const parentName = m.managerId ? (appState.users.find(u=>u.id===m.managerId)?.name || '上级账号') : '无直属上级';
+        return `<div class="team-member-card p-4 rounded-xl border flex flex-wrap items-center justify-between gap-3 text-sm shadow-sm">
+          <div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-2"><strong class="text-slate-900">${escapeHtml(m.name)}</strong><span class="text-slate-500 font-mono">@${escapeHtml(m.username)}</span><span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">${roleLabel(m.role)}</span></div>
+          <p class="text-xs text-slate-500 mt-1">状态：${m.disabled?'<span class="text-rose-600">已停用</span>':'<span class="text-emerald-700">正常</span>'}${m.email?' · '+escapeHtml(m.email):''}</p>
+          <p class="text-xs text-slate-600 mt-1">所属团队：${escapeHtml(parentName)}</p></div>
+          ${manageable?`<div class="flex flex-wrap items-center gap-2">${isSiteOwner(actor)?`<select class="field px-2 py-2 text-sm" aria-label="选择直属管理或组长" title="设置该成员所属团队" onchange="updateTeamMemberManager('${escapeHtml(m.id)}',this.value)">${teamOptions}</select>`:''}${directManage?`<select class="field px-2 py-2 text-sm" aria-label="调整职位" onchange="updateTeamMemberRole('${escapeHtml(m.id)}',this.value)">${roleOptions}</select>`:''}<button type="button" onclick="resetTeamMemberPassword('${escapeHtml(m.id)}')" class="px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold">重置密码</button>${isSiteOwner(actor)?`<button type="button" onclick="toggleTeamMemberDisabled('${escapeHtml(m.id)}')" class="px-3 py-2 rounded-lg ${m.disabled?'bg-emerald-50 text-emerald-700':'bg-rose-50 text-rose-700'} text-sm font-semibold">${m.disabled?'启用':'停用'}</button>`:''}</div>`:''}
+        </div>`;
+      }).join('');
     }
 
     // Supabase 的 API 默认单次最多返回 1000 行（max-rows），URL 里写 limit=10000 也会被截断。
@@ -1313,7 +1749,7 @@
       let offset = 0;
       while (true) {
         const page = await supabaseRequest(
-          `xinsheng_registrations?select=*&order=created_at_china.desc,id.asc&limit=${pageSize}&offset=${offset}`,
+          `xinsheng_registrations?select=id,owner_id,owner_name,client_name,contact,channel,status,notes,created_at_china&order=created_at_china.desc,id.asc&limit=${pageSize}&offset=${offset}`,
           { timeoutMs: 30000 }
         );
         if (!Array.isArray(page) || page.length === 0) break;
@@ -1323,17 +1759,42 @@
       return all;
     }
 
+    // 同一时间只允许一个刷新在跑，避免定时刷新、导入前刷新叠在一起重复拉全量数据
+    let refreshInFlight = null;
+    let lastRefreshAt = 0;
     async function refreshFromSupabase(silent = false) {
+      if (refreshInFlight) {
+        if (silent) return refreshInFlight;
+        await refreshInFlight.catch(() => {});
+      }
+      const task = doRefreshFromSupabase(silent).finally(() => {
+        lastRefreshAt = Date.now();
+        if (refreshInFlight === task) refreshInFlight = null;
+      });
+      refreshInFlight = task;
+      return task;
+    }
+
+    async function doRefreshFromSupabase(silent = false) {
       if (!authSession) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 8000);
+        let healthError = '';
         try {
-          const r = await fetch(`${SUPABASE_CONFIG.url}/auth/v1/health`, { headers: { apikey: SUPABASE_CONFIG.anonKey } });
+          const r = await fetch(`${SUPABASE_CONFIG.url}/auth/v1/health`, {
+            headers: { apikey: SUPABASE_CONFIG.anonKey }, signal: controller.signal
+          });
           cloudReady = r.ok;
-        } catch (e) { cloudReady = false; }
-        updateConnectionIndicators(cloudReady, cloudReady ? '数据模式：云端已连通，请登录' : '数据模式：云端连接异常');
+          if (!r.ok) healthError = `HTTP ${r.status}`;
+        } catch (e) {
+          cloudReady = false;
+          healthError = e && e.name === 'AbortError' ? '连接检测超时（8 秒）' : (e.message || '网络连接失败');
+        } finally { clearTimeout(timer); }
+        updateConnectionIndicators(cloudReady, cloudReady ? '数据模式：云端已连通，请登录' : `数据模式：云端连接异常（${healthError || '未知错误'}）`);
         return;
       }
       try {
-        const usersData = await supabaseRequest('xinsheng_users?select=id,username,name,email,role,disabled');
+        const usersData = await supabaseRequest('xinsheng_users?select=id,username,name,email,role,disabled,manager_id');
         const regsData = await fetchAllRegistrations();
 
         if (Array.isArray(usersData)) {
@@ -1382,34 +1843,78 @@
         });
         cloudReady = true;
         updateConnectionIndicators(true);
+        return true;
       } catch (err) {
-        cloudReady = false;
         const reason = err && err.message ? err.message : '写入失败';
+        // 数据库对号码有唯一约束时：别人刚好抢先登记了同一个号码
+        if (reason.includes('23505') || /duplicate key/i.test(reason)) return 'duplicate';
+        cloudReady = false;
         updateConnectionIndicators(false, `数据模式：云端写入异常（${reason}），已保存在本地`);
+        return false;
       }
     }
 
-    async function syncBatchRegistrationsToCloud(records) {
-      saveLocalBackup();
-      if (!Array.isArray(records) || !records.length) return;
+    // 导入专用：遇到数据库里已有的号码（lookup_key 相同）直接跳过，不报错、不重复。
+    // 数据库还没加唯一索引时（42P10）自动退回按 id 写入，所以前端和数据库谁先部署都不会出错。
+    async function insertChunkSkippingDuplicates(chunk) {
       try {
-        const chunkSize = 200;
-        for (let i = 0; i < records.length; i += chunkSize) {
-          const chunk = records.slice(i, i + chunkSize).map(mapLocalRegToDb);
+        const inserted = await supabaseRequest('xinsheng_registrations?on_conflict=lookup_key&select=id', {
+          method: 'POST',
+          headers: { Prefer: 'resolution=ignore-duplicates,return=representation' },
+          body: JSON.stringify(chunk)
+        });
+        return new Set((Array.isArray(inserted) ? inserted : []).map((r) => r.id));
+      } catch (err) {
+        const msg = String(err && err.message ? err.message : '');
+        if (msg.includes('42P10') || /no unique or exclusion constraint/i.test(msg)) {
           await supabaseRequest('xinsheng_registrations?on_conflict=id', {
             method: 'POST',
             headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
             body: JSON.stringify(chunk)
           });
+          return new Set(chunk.map((r) => r.id));
+        }
+        throw err;
+      }
+    }
+
+    // 返回 { ok, ignoredIds }：ignoredIds 是被数据库判定为重复而没有写入的记录 id
+    async function syncBatchRegistrationsToCloud(records, opts = {}) {
+      saveLocalBackup();
+      const result = { ok: false, ignoredIds: [] };
+      if (!Array.isArray(records) || !records.length) { result.ok = true; return result; }
+      try {
+        const chunkSize = 200;
+        for (let i = 0; i < records.length; i += chunkSize) {
+          const chunk = records.slice(i, i + chunkSize).map(mapLocalRegToDb);
+          if (opts.skipDuplicates) {
+            const insertedIds = await insertChunkSkippingDuplicates(chunk);
+            chunk.forEach((row) => { if (!insertedIds.has(row.id)) result.ignoredIds.push(row.id); });
+          } else {
+            await supabaseRequest('xinsheng_registrations?on_conflict=id', {
+              method: 'POST',
+              headers: { Prefer: 'resolution=merge-duplicates,return=minimal' },
+              body: JSON.stringify(chunk)
+            });
+          }
         }
         cloudReady = true;
         updateConnectionIndicators(true);
+        result.ok = true;
       } catch (err) {
         cloudReady = false;
         const reason = err && err.message ? err.message : '批量写入失败';
         updateConnectionIndicators(false, `数据模式：批量同步云端失败（${reason}），已保存在本地`);
         showToast(`云端同步失败：${reason}；可点顶部“导出入库 SQL”去数据库执行`);
       }
+      return result;
+    }
+
+    // 把被数据库判定为重复的记录，从本地列表里撤掉
+    function dropIgnoredLocalRecords(ignoredIds) {
+      if (!ignoredIds || !ignoredIds.length) return;
+      const drop = new Set(ignoredIds);
+      appState.registrations = appState.registrations.filter((r) => !drop.has(r.id));
     }
 
     function escapeSqlLiteral(val) {
@@ -1468,6 +1973,25 @@
     }
 
     function isSiteOwner(user) { return Boolean(user && user.role === 'owner'); }
+    function canManageTeam(user) { return Boolean(user && ['owner','manager','leader'].includes(user.role)); }
+    function canManageUser(actor, target) {
+      if (!actor || !target || target.role === 'owner') return false;
+      if (isSiteOwner(actor)) return true;
+      if (!canManageTeam(actor)) return false;
+      const direct = target.managerId === actor.id;
+      const secondLevel = actor.role === 'manager' && appState.users.some(u => u.id === target.managerId && u.managerId === actor.id);
+      return (direct || secondLevel) && !(actor.role === 'leader' && target.role !== 'member');
+    }
+    function canViewRegistration(user, record) {
+      if (!user || !record) return false;
+      if (isSiteOwner(user)) return true;
+      if (user.role === 'lookup') return false;
+      if (record.ownerId === user.id) return true;
+      if (user.role === 'manager') return true; // 管理按已确认方案查看全公司团队数据
+      if (user.role !== 'leader') return false;
+      const owner = appState.users.find(u => u.id === record.ownerId);
+      return Boolean(owner && owner.managerId === user.id);
+    }
 
     let toastTimer = null;
     function showToast(message) {
@@ -1504,13 +2028,19 @@ let matched = null;
         saveAuthSession(await passwordLogin(username, password));
         appState.sessionUserId = authSession.user_id;
         await refreshFromSupabase(true);
+
+        // 刷新函数会自行捕获异常；登录流程必须检查云端读取结果，避免把读取失败误判为账号停用。
+        if (!cloudReady) throw new Error('密码验证已通过，但读取云端用户资料失败。请检查网络或数据库权限后重试。');
         matched = appState.users.find((u) => u.id === authSession.user_id) || null;
-        if (!matched || matched.disabled) {
+        if (matched && matched.disabled) {
           failMsg = '该账号已被停用，请联系鑫盛站长。';
           matched = null;
+        } else if (!matched) {
+          failMsg = '登录验证成功，但云端用户资料中没有找到此账号。请联系管理员检查账号资料。';
         }
       } catch (e) {
-        if (e && e.status !== 400 && e.status !== 401 && e.status !== 422) failMsg = '连接云端失败，请检查网络后重试。';
+        if (e && [400, 401, 422].includes(e.status)) failMsg = '账号或密码不正确，请核对后重试。';
+        else failMsg = (e && e.message) ? e.message : '连接云端失败，请检查网络后重试。';
       }
 
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '立即登入工作台'; }
@@ -1566,80 +2096,234 @@ let matched = null;
       const accountEl = document.getElementById('banner-user-account');
       const scopeHintEl = document.getElementById('records-scope-hint');
       const leftOwnerBtn = document.getElementById('left-nav-owner');
-      const drawerOwnerTab = document.getElementById('drawer-tab-owner');
+      const dashboardBtn = document.getElementById('left-nav-dashboard');
+      const auditBtn = document.getElementById('left-nav-audit');
+      const recordsBtn = document.getElementById('left-nav-records');
+      const lookupBtn = document.getElementById('left-nav-lookup');
+      const registerBtn = document.getElementById('left-nav-register');
       const secEmailInput = document.getElementById('sec-email');
+      const securityNav = document.getElementById('left-nav-security');
+      const bannerStats = document.getElementById('banner-stats');
+      ['header-sync-btn','header-upload-btn','header-export-btn','header-copy-link-btn'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.toggle('hidden',user.role==='lookup');});
+      if(bannerStats) bannerStats.classList.toggle('hidden',user.role==='lookup');
 
-      if (roleBadge) roleBadge.textContent = ownerFlag ? '网站拥有者' : '团队成员';
+      if (roleBadge) roleBadge.textContent = roleLabel(user.role);
       if (greetingEl) greetingEl.textContent = `你好，${user.name || user.username}`;
       if (accountEl) accountEl.textContent = `账号：${user.username}`;
       if (scopeHintEl) {
         scopeHintEl.textContent = ownerFlag
-          ? '站长视图：可查看、筛选并管理全团队全部登记记录'
-          : '个人视图：仅展示您本人名下的客户登记（查重自动检索全库）';
+          ? '网站拥有者：查看和管理全站账号、权限及全部登记记录'
+          : canManageTeam(user)
+            ? (user.role==='manager' ? '管理权限：查看全公司全部团队登记与业绩' : '组长权限：查看本人及直属小组登记与业绩')
+            : '组员视图：查看本人名下的登记记录（查重检索共享库）';
       }
-      if (leftOwnerBtn) leftOwnerBtn.classList.toggle('hidden', !ownerFlag);
-      if (drawerOwnerTab) drawerOwnerTab.classList.toggle('hidden', !ownerFlag);
+      if (leftOwnerBtn) leftOwnerBtn.classList.toggle('hidden', !canManageTeam(user));
+      if (dashboardBtn) dashboardBtn.classList.toggle('hidden', !['owner','manager','leader'].includes(user.role));
+      if (auditBtn) auditBtn.classList.toggle('hidden', !['owner','manager','leader'].includes(user.role));
+      if (recordsBtn) recordsBtn.classList.toggle('hidden', user.role==='lookup');
+      if (registerBtn) registerBtn.classList.toggle('hidden', user.role==='lookup');
+      if (lookupBtn) lookupBtn.classList.remove('hidden');
+      if (securityNav) securityNav.classList.toggle('hidden', user.role==='lookup');
+      if (user.role==='lookup' && activeDrawerTab!=='lookup') activeDrawerTab='lookup';
       if (secEmailInput) secEmailInput.value = user.email || '';
 
       renderRecordsList();
       updateBannerStats();
-      if (ownerFlag) renderTeamMembersList();
+      if (canManageTeam(user)) {
+        renderTeamMembersList();
+        const roleSelect=document.getElementById('new-member-role');
+        if(roleSelect) { [...roleSelect.options].forEach(o=>{ o.hidden = (user.role==='leader' && o.value!=='member') || (user.role==='manager' && ['manager','lookup'].includes(o.value)) || (user.role!=='owner' && o.value==='lookup'); }); if(user.role!=='owner' && roleSelect.value==='lookup') roleSelect.value='member'; }
+        const managerSelect=document.getElementById('new-member-manager');
+        if(managerSelect) {
+          managerSelect.innerHTML = isSiteOwner(user)
+            ? '<option value="">无（顶层直属）</option>'+appState.users.filter(u=>['manager','leader'].includes(u.role)&&!u.disabled).map(u=>`<option value="${escapeHtml(u.id)}">${escapeHtml(u.name)} · ${roleLabel(u.role)}</option>`).join('')
+            : `<option value="${escapeHtml(user.id)}">${escapeHtml(user.name)}（直属上级）</option>`;
+          managerSelect.value = isSiteOwner(user) ? '' : user.id;
+          managerSelect.disabled = !isSiteOwner(user);
+        }
+      }
+      openSideDrawer(activeDrawerTab || (user.role==='lookup' ? 'lookup' : (['owner','manager','leader'].includes(user.role) ? 'dashboard' : 'records')));
+    }
+
+    function dashboardPeriodStart(period) {
+      const now = new Date();
+      const today = getChinaTimeString(now).slice(0,10);
+      if (period === 'today') return today;
+      if (period === 'month') return today.slice(0,7) + '-01';
+      if (period === '7' || period === '30') {
+        const d = new Date(now.getTime() - (Number(period)-1)*86400000);
+        return getChinaTimeString(d).slice(0,10);
+      }
+      return '';
+    }
+    function dashboardTeamRoot(user) {
+      let current=user, guard=0;
+      while(current && current.managerId && guard++<12) {
+        const parent=appState.users.find(u=>u.id===current.managerId);
+        if(!parent || parent.role==='owner') break;
+        current=parent;
+      }
+      return current || user;
+    }
+    function renderTeamDashboard() {
+      const actor=getCurrentAuthenticatedUser();
+      if(!actor || !['owner','manager','leader'].includes(actor.role)) return;
+      const period=document.getElementById('dashboard-period')?.value || '7';
+      const start=dashboardPeriodStart(period);
+      const today=getChinaTimeString(new Date()).slice(0,10);
+      const regs=appState.registrations.filter(r=>{
+        if(actor.role==='leader' && !canViewRegistration(actor,r)) return false;
+        return !start || String(r.createdAtChina||'').slice(0,10)>=start;
+      });
+      const allRegs=appState.registrations.filter(r=>actor.role!=='leader' || canViewRegistration(actor,r));
+      const countByUser=new Map(); regs.forEach(r=>countByUser.set(r.ownerId,(countByUser.get(r.ownerId)||0)+1));
+      const active=[...countByUser.keys()].filter(id=>appState.users.some(u=>u.id===id && u.role!=='lookup')).length;
+      const setText=(id,value)=>{const el=document.getElementById(id);if(el)el.textContent=String(value)};
+      setText('dash-total',regs.length); setText('dash-today',allRegs.filter(r=>String(r.createdAtChina||'').startsWith(today)).length);
+      setText('dash-active',active); setText('dash-all',allRegs.length);
+      const note=document.getElementById('dashboard-scope-note');
+      if(note) note.textContent=actor.role==='leader'?'仅统计本组真实登记数据':actor.role==='manager'?'全公司团队数据（按已确认权限）':'全站真实登记数据';
+      const trend=document.getElementById('dash-trend');
+      if(trend){
+        const days=[]; for(let i=6;i>=0;i--){const d=new Date(Date.now()-i*86400000);days.push(getChinaTimeString(d).slice(0,10));}
+        const trendRegs=allRegs;
+        const counts=days.map(day=>trendRegs.filter(r=>String(r.createdAtChina||'').startsWith(day)).length); const max=Math.max(1,...counts);
+        trend.innerHTML=days.map((day,i)=>`<div class="grid grid-cols-[92px_1fr_42px] items-center gap-3 text-xs"><span class="text-slate-400 font-mono">${day.slice(5)}</span><div class="h-2.5 rounded-full bg-slate-800 overflow-hidden"><div class="h-full rounded-full" style="width:${counts[i]/max*100}%;background:var(--app-accent,#e7b34b)"></div></div><strong class="text-right font-mono">${counts[i]}</strong></div>`).join('');
+      }
+      const people=appState.users.filter(u=>u.role!=='owner' && u.role!=='lookup' && !u.disabled && (actor.role!=='leader' || u.id===actor.id || u.managerId===actor.id)).map(u=>({user:u,count:countByUser.get(u.id)||0})).sort((a,b)=>b.count-a.count||a.user.name.localeCompare(b.user.name));
+      const company=document.getElementById('dash-company-ranking');
+      if(company) company.innerHTML=people.length?people.slice(0,10).map((x,i)=>`<div class="grid grid-cols-[28px_1fr_48px] gap-2 items-center text-sm"><span class="text-amber-300 font-mono font-bold">${String(i+1).padStart(2,'0')}</span><div class="min-w-0"><div class="flex justify-between gap-2"><strong class="truncate">${escapeHtml(x.user.name)}</strong><span class="text-xs text-slate-400">${roleLabel(x.user.role)}</span></div><div class="h-1.5 rounded-full bg-slate-800 mt-1 overflow-hidden"><div class="h-full rounded-full" style="width:${Math.max(2,x.count/(people[0]?.count||1)*100)}%;background:var(--app-accent,#e7b34b)"></div></div></div><strong class="text-right font-mono">${x.count}</strong></div>`).join(''):'<p class="text-sm text-slate-500">当前周期暂无登记数据</p>';
+      const groups=new Map();
+      for(const u of appState.users.filter(u=>!u.disabled && ['manager','leader'].includes(u.role) && (actor.role!=='leader' || u.id===actor.id))){
+        const groupRegs=regs.filter(r=>{const member=appState.users.find(x=>x.id===r.ownerId);return member && (member.managerId===u.id || (u.role==='manager' && dashboardTeamRoot(member).id===u.id));});
+        groups.set(u.id,{user:u,count:groupRegs.length,members:appState.users.filter(m=>m.managerId===u.id && !m.disabled).length});
+      }
+      const groupList=[...groups.values()].sort((a,b)=>b.count-a.count||a.user.name.localeCompare(b.user.name));
+      const teamEl=document.getElementById('dash-team-ranking');
+      if(teamEl) teamEl.innerHTML=groupList.length?groupList.map((g,i)=>`<div class="rounded-lg border hairline bg-slate-900/50 p-3"><div class="flex items-center justify-between gap-2"><strong>${String(i+1).padStart(2,'0')} · ${escapeHtml(g.user.name)}</strong><span class="text-xs text-slate-400">${roleLabel(g.user.role)}</span></div><div class="flex items-end justify-between mt-3"><span class="text-xs text-slate-400">下属成员 ${g.members} 人</span><strong class="text-xl font-extrabold text-amber-300">${g.count} <small class="text-xs font-normal text-slate-400">条</small></strong></div></div>`).join(''):'<p class="text-sm text-slate-500">尚未建立管理 / 组长团队</p>';
+    }
+
+    let auditPage = 0;
+    const AUDIT_PAGE_SIZE = 30;
+    function auditActionLabel(action) {
+      return action === 'INSERT' ? '新增登记' : action === 'UPDATE' ? '修改登记' : action === 'DELETE' ? '删除登记' : action;
+    }
+    function auditFieldLabel(field) {
+      const labels = { contact:'号码 / 电报', client_name:'登记姓名', owner_name:'归属成员', channel:'渠道', status:'跟进状态', notes:'跟进备注', lookup_key:'查重索引', created_at_china:'登记时间' };
+      return labels[field] || field;
+    }
+    function auditValue(value) {
+      if (value === null || value === undefined || value === '') return '（空）';
+      if (typeof value === 'object') return JSON.stringify(value);
+      return String(value);
+    }
+    function changeAuditPage(delta) {
+      auditPage = Math.max(0, auditPage + delta);
+      loadRegistrationAudit(false);
+    }
+    async function loadRegistrationAudit(resetPage = false) {
+      const actor = getCurrentAuthenticatedUser();
+      const list = document.getElementById('audit-log-list');
+      if (!actor || !['owner','manager','leader'].includes(actor.role) || !list) return;
+      if (resetPage) auditPage = 0;
+      list.innerHTML = '<div class="rounded-xl border hairline p-5 text-sm text-slate-400">正在读取云端操作记录...</div>';
+      const keyword = document.getElementById('audit-keyword')?.value?.trim() || '';
+      const action = document.getElementById('audit-action')?.value || '';
+      try {
+        const result = await supabaseRequest('rpc/xs_get_registration_audit', {
+          method:'POST',
+          body:JSON.stringify({p_action:action || null,p_keyword:keyword || null,p_limit:AUDIT_PAGE_SIZE,p_offset:auditPage*AUDIT_PAGE_SIZE})
+        });
+        const rows = Array.isArray(result?.rows) ? result.rows : [];
+        const total = Number(result?.total || 0);
+        const scope = document.getElementById('audit-scope-note');
+        if (scope) scope.textContent = actor.role === 'leader' ? '仅显示本人及直属小组的登记操作' : '显示全公司登记操作；所有记录由数据库自动生成';
+        const count = document.getElementById('audit-result-count');
+        if (count) count.textContent = `共 ${total.toLocaleString()} 条操作记录`;
+        const pages = Math.max(1,Math.ceil(total/AUDIT_PAGE_SIZE));
+        if (auditPage >= pages && auditPage > 0) { auditPage=pages-1; return loadRegistrationAudit(false); }
+        const pageLabel=document.getElementById('audit-page-label');
+        if(pageLabel) pageLabel.textContent=`第 ${auditPage+1} / ${pages} 页`;
+        const prev=document.getElementById('audit-prev-btn'), next=document.getElementById('audit-next-btn');
+        if(prev) prev.disabled=auditPage<=0;
+        if(next) next.disabled=auditPage>=pages-1;
+        if (!rows.length) {
+          list.innerHTML='<div class="rounded-xl border hairline p-8 text-center text-sm text-slate-400">暂无符合条件的操作记录。新发生的新增、修改和删除会自动记录。</div>';
+          return;
+        }
+        list.innerHTML=rows.map((row,index)=>{
+          const actionColor=row.action==='INSERT'?'text-emerald-400':row.action==='DELETE'?'text-rose-400':'text-amber-300';
+          const changed=Array.isArray(row.changed_fields)?row.changed_fields:[];
+          const oldData=row.old_data||{}, newData=row.new_data||{};
+          const detailFields=changed.filter(f=>['contact','client_name','owner_name','channel','status','notes'].includes(f));
+          const detail=detailFields.map(field=>{
+            const before=oldData[field], after=newData[field];
+            if(row.action==='INSERT') return `<div class="grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-1 py-1 border-b hairline-soft"><span class="text-slate-400">${auditFieldLabel(field)}</span><span class="break-all">${escapeHtml(auditValue(after))}</span></div>`;
+            if(row.action==='DELETE') return `<div class="grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-1 py-1 border-b hairline-soft"><span class="text-slate-400">${auditFieldLabel(field)}</span><span class="break-all">${escapeHtml(auditValue(before))}</span></div>`;
+            return `<div class="grid grid-cols-1 sm:grid-cols-[110px_1fr] gap-1 py-1 border-b hairline-soft"><span class="text-slate-400">${auditFieldLabel(field)}</span><span class="break-all"><span class="text-rose-400 line-through">${escapeHtml(auditValue(before))}</span><span class="mx-2 text-slate-500">→</span><span class="text-emerald-400">${escapeHtml(auditValue(after))}</span></span></div>`;
+          }).join('');
+          const stamp=row.created_at?new Date(row.created_at).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false}):'时间未知';
+          const summaryContact=row.contact||row.new_data?.contact||row.old_data?.contact||'（无号码）';
+          return `<details class="rounded-xl border hairline bg-slate-900/30 p-3 sm:p-4">
+            <summary class="cursor-pointer list-none flex flex-col lg:flex-row lg:items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-2 min-w-0">
+                <strong class="${actionColor}">${auditActionLabel(row.action)}</strong>
+                <span class="font-mono font-bold text-amber-300 break-all">${escapeHtml(summaryContact)}</span>
+                <span class="text-xs text-slate-300">${escapeHtml(row.client_name||row.new_data?.client_name||row.old_data?.client_name||'')}</span>
+                <span class="text-xs text-slate-400">操作人：${escapeHtml(row.actor_name||'系统操作')}（${escapeHtml(row.actor_username||'系统')}）</span>
+              </div>
+              <span class="text-xs text-slate-500 font-mono shrink-0">${escapeHtml(stamp)}　⌄</span>
+            </summary>
+            <div class="mt-3 pt-3 border-t hairline-soft space-y-2 text-sm">
+              <div class="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-400">
+                <span>归属：${escapeHtml(row.owner_name||'未知')}</span>
+                <span>操作角色：${escapeHtml(roleLabel(row.actor_role||''))}</span>
+                <span>记录编号：${escapeHtml(row.record_id||'')}</span>
+              </div>
+              ${detail || '<p class="text-xs text-slate-500">本次未发现可展示的字段变化。</p>'}
+            </div>
+          </details>`;
+        }).join('');
+      } catch (err) {
+        list.innerHTML=`<div class="rounded-xl border border-rose-400/30 p-5 text-sm text-rose-400">读取操作记录失败：${escapeHtml(err.message||'请重试')}</div>`;
+      }
     }
 
     function openSideDrawer(tabName) {
-      const user = getCurrentAuthenticatedUser();
-      if (!user) return;
-      if (tabName === 'owner' && !isSiteOwner(user)) tabName = 'lookup';
-
-      activeDrawerTab = tabName || 'lookup';
-      const drawer = document.getElementById('side-drawer');
-      const backdrop = document.getElementById('side-drawer-backdrop');
-      if (drawer) drawer.classList.remove('-translate-x-full');
-      if (backdrop) {
-        backdrop.classList.remove('pointer-events-none');
-        requestAnimationFrame(() => backdrop.classList.remove('opacity-0'));
-      }
-
-      const tabs = ['lookup', 'register', 'security', 'owner'];
-      tabs.forEach((key) => {
-        const panel = document.getElementById(`drawer-panel-${key}`);
-        const tabBtn = document.getElementById(`drawer-tab-${key}`);
-        const active = key === activeDrawerTab;
-        if (panel) panel.classList.toggle('hidden', !active);
-        if (tabBtn) {
-          if (active) {
-            tabBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-amber-400 text-slate-950';
-          } else if (key === 'owner') {
-            tabBtn.className = `${isSiteOwner(user) ? '' : 'hidden '}px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-amber-500/15 text-amber-300 border border-amber-500/30`;
-          } else {
-            tabBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold transition cursor-pointer bg-slate-900 text-slate-300 hover:text-amber-200 border hairline';
-          }
-        }
+      const user=getCurrentAuthenticatedUser();
+      if(!user) return;
+      if(tabName==='owner' && !canManageTeam(user)) tabName='lookup';
+      if(tabName==='dashboard' && !['owner','manager','leader'].includes(user.role)) tabName='lookup';
+      if(tabName==='audit' && !['owner','manager','leader'].includes(user.role)) tabName='lookup';
+      if(user.role==='lookup' && tabName!=='lookup') tabName='lookup';
+      activeDrawerTab=tabName||'lookup';
+      const tabs=['dashboard','audit','lookup','register','security','owner'];
+      tabs.forEach(key=>{
+        const panel=document.getElementById(`drawer-panel-${key}`);
+        if(panel) panel.classList.toggle('hidden',key!==activeDrawerTab);
+        const nav=document.getElementById(`left-nav-${key}`);
+        if(nav) nav.classList.toggle('is-active', key===activeDrawerTab);
       });
-
-      if (activeDrawerTab === 'register') {
-        const nameInput = document.getElementById('reg-client-name');
-        const editId = document.getElementById('reg-edit-id')?.value;
-        if (nameInput && !editId && !nameInput.value.trim()) {
-          nameInput.value = user.name || user.username;
-        }
-      } else if (activeDrawerTab === 'security') {
-        const secEmail = document.getElementById('sec-email');
-        if (secEmail) secEmail.value = user.email || '';
-      } else if (activeDrawerTab === 'owner' && isSiteOwner(user)) {
-        renderTeamMembersList();
-      }
+      const auditPanel=document.getElementById('drawer-panel-audit');
+      if(auditPanel) auditPanel.classList.toggle('hidden',activeDrawerTab!=='audit');
+      const auditNav=document.getElementById('left-nav-audit');
+      if(auditNav) auditNav.classList.toggle('is-active',activeDrawerTab==='audit');
+      const dashboardPanel=document.getElementById('drawer-panel-dashboard');
+      if(dashboardPanel) dashboardPanel.classList.toggle('hidden',activeDrawerTab!=='dashboard');
+      const recordsPanel=document.getElementById('records-panel-card');
+      if(recordsPanel) recordsPanel.classList.toggle('hidden',activeDrawerTab!=='records' || user.role==='lookup');
+      const recordsNav=document.getElementById('left-nav-records');
+      if(recordsNav) recordsNav.classList.toggle('is-active', activeDrawerTab==='records');
+      const nameInput=document.getElementById('reg-client-name');
+      const editId=document.getElementById('reg-edit-id')?.value;
+      if(activeDrawerTab==='register' && nameInput && !editId && !nameInput.value.trim()) nameInput.value=user.name||user.username;
+      if(activeDrawerTab==='security') { const email=document.getElementById('sec-email'); if(email) email.value=user.email||''; }
+      if(activeDrawerTab==='owner') renderTeamMembersList();
+      if(activeDrawerTab==='dashboard') renderTeamDashboard();
+      if(activeDrawerTab==='audit') loadRegistrationAudit(true);
     }
 
-    function closeSideDrawer() {
-      const drawer = document.getElementById('side-drawer');
-      const backdrop = document.getElementById('side-drawer-backdrop');
-      if (drawer) drawer.classList.add('-translate-x-full');
-      if (backdrop) {
-        backdrop.classList.add('opacity-0');
-        backdrop.classList.add('pointer-events-none');
-      }
-    }
+    function closeSideDrawer() { /* Panels now live in the main workspace. */ }
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeSideDrawer();
@@ -1653,68 +2337,39 @@ let matched = null;
       if (!user || !input || !box) return;
 
       const query = input.value.trim();
-      const key = normalizeLookupKey(query);
-      if (!key) {
+      if (!normalizeLookupKey(query)) {
         box.innerHTML = `<p class="text-rose-300 font-semibold">未能识别有效的手机号或电报账号，请重新输入。</p>`;
         return;
       }
 
-      box.innerHTML = `<p class="text-slate-400 font-mono text-xs"><span class="led inline-block w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5 align-middle"></span>正在云端与本地库并行检索...</p>`;
-
-      if (cloudReady) {
-        try {
-          const remoteRows = await supabaseRequest(
-            `xinsheng_registrations?lookup_key=eq.${encodeURIComponent(key)}&select=*`
-          );
-          if (Array.isArray(remoteRows) && remoteRows.length > 0) {
-            remoteRows.map(mapDbRegToLocal).filter(Boolean).forEach((remoteRec) => {
-              const existIdx = appState.registrations.findIndex((r) => r.id === remoteRec.id);
-              if (existIdx >= 0) appState.registrations[existIdx] = remoteRec;
-              else appState.registrations.unshift(remoteRec);
-            });
-            saveLocalBackup();
-          }
-        } catch (err) { /* fallback to local */ }
-      }
-
-      const matches = appState.registrations.filter((r) => normalizeLookupKey(r.contact) === key);
-      if (!matches.length) {
-        box.innerHTML = `
-          <div class="space-y-3">
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/30 text-xs font-bold">
-              <span class="led w-1.5 h-1.5 rounded-full bg-emerald-400"></span>✓ 未登记 · 可放心跟进
-            </div>
-            <p class="text-slate-300 text-xs">号码 / 电报 <span class="text-amber-300 font-mono">${escapeHtml(query)}</span> 尚未被团队任何人登记。</p>
-            <button
-              type="button"
-              onclick="prefillNewRegistration('${escapeHtml(query)}')"
-              class="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs shadow-glow transition cursor-pointer"
-            >
-              立即去登记此客户 →
-            </button>
-          </div>
-        `;
+      box.innerHTML = `<p class="text-slate-400 font-mono text-xs"><span class="led inline-block w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5 align-middle"></span>正在查询 Supabase 总库…</p>`;
+      await refreshFromSupabase(true);
+      if (!cloudReady) {
+        box.innerHTML = `<div class="rounded-xl border border-rose-300 bg-rose-50 p-4 text-rose-800"><strong>暂时无法确认登记状态</strong><p class="mt-1 text-sm">云端数据库连接异常，当前不能将“没有查到”判断为“未登记”。请恢复连接后重新查询。</p></div>`;
         return;
       }
 
-      const itemsHtml = matches.map((m) => {
-        const isMine = m.ownerId === user.id;
-        return `
-          <div class="p-3 rounded-xl bg-slate-950/90 border ${isMine ? 'border-amber-500/35' : 'border-rose-400/35'} space-y-1.5">
-            <div class="flex items-center justify-between gap-2">
-              <span class="text-xs font-bold ${isMine ? 'text-amber-300' : 'text-rose-300'}">
-                ${isMine ? '● 您本人已登记' : `▲ 已被【${escapeHtml(m.ownerName)}】登记`}
-              </span>
-              <span class="text-[11px] px-2 py-0.5 rounded bg-slate-900 border hairline text-slate-300">${escapeHtml(m.status)}</span>
-            </div>
-            <p class="text-xs text-slate-200 font-mono">${escapeHtml(m.contact)} · 渠道：${escapeHtml(m.channel)}</p>
-            <p class="text-[11px] text-slate-400">登记姓名：${escapeHtml(m.clientName)} · 时间：${escapeHtml(m.createdAtChina)}</p>
-            ${m.notes ? `<p class="text-xs text-slate-300 pt-1 border-t hairline-soft">备注：${escapeHtml(m.notes)}</p>` : ''}
-          </div>
-        `;
-      }).join('');
-
-      box.innerHTML = `<div class="space-y-2.5">${itemsHtml}</div>`;
+      try {
+        const result = await supabaseRequest('rpc/xs_lookup_registrations', {
+          method: 'POST',
+          body: JSON.stringify({p_query:query,p_offset:0,p_limit:LOOKUP_LIVE_PAGE_SIZE})
+        });
+        lookupLiveServerMode = true;
+        lookupLiveQuery = query;
+        lookupLivePage = 1;
+        lookupLiveTotal = Number(result?.total || 0);
+        lookupLiveMatches = (Array.isArray(result?.rows) ? result.rows : []).map(mapDbRegToLocal).filter(Boolean);
+        if (!lookupLiveTotal) {
+          const registerAction = user.role === 'lookup' ? '' : `<button type="button" onclick="prefillNewRegistration('${escapeHtml(query)}')" class="px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs shadow-glow transition cursor-pointer">立即去登记此客户 →</button>`;
+          box.innerHTML = `<div class="space-y-3"><div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-400/30 text-xs font-bold"><span class="led w-1.5 h-1.5 rounded-full bg-emerald-400"></span>✓ 总库未登记 · 可放心跟进</div><p class="text-slate-300 text-xs">号码 / 电报 <span class="text-amber-300 font-mono">${escapeHtml(query)}</span> 在 Supabase 总库中没有匹配记录。</p>${registerAction}</div>`;
+        } else {
+          box.innerHTML = `<div class="rounded-xl border hairline p-3"><strong>总库查询完成</strong><p class="mt-1 text-sm">共匹配 ${lookupLiveTotal.toLocaleString()} 条登记记录（包含重复登记），请查看下方登记人和状态。</p></div>`;
+        }
+        renderLookupLiveResults(query);
+      } catch (err) {
+        lookupLiveServerMode = false;
+        box.innerHTML = `<div class="rounded-xl border border-rose-400/40 p-3 text-rose-300"><strong>总库查询失败</strong><p class="mt-1 text-xs">${escapeHtml(err.message || '请稍后重试')}</p><p class="mt-1 text-xs">未能确认登记状态，请勿将查询失败当作“未登记”。</p></div>`;
+      }
     }
 
     function prefillNewRegistration(contactValue) {
@@ -1747,10 +2402,10 @@ let matched = null;
 
     function startEditRegistration(recordId) {
       const user = getCurrentAuthenticatedUser();
-      if (!user) return;
+      if (!user || user.role==='lookup') { showToast('查号员账号仅允许查号'); return; }
       const rec = appState.registrations.find((r) => r.id === recordId);
       if (!rec) return;
-      if (rec.ownerId !== user.id && !isSiteOwner(user)) {
+      if (!canViewRegistration(user, rec)) {
         showToast('只能编辑自己名下的登记记录');
         return;
       }
@@ -1769,7 +2424,7 @@ let matched = null;
     async function handleRegistrationSubmit(event) {
       if (event) event.preventDefault();
       const user = getCurrentAuthenticatedUser();
-      if (!user) return;
+      if (!user || user.role==='lookup') { showToast('查号员账号仅允许查号，不能新增登记'); return; }
 
       const editId = document.getElementById('reg-edit-id')?.value.trim() || '';
       const clientNameRaw = document.getElementById('reg-client-name')?.value.trim() || '';
@@ -1783,19 +2438,11 @@ let matched = null;
 
       if (cloudReady) await refreshFromSupabase(true);
 
-      const duplicate = appState.registrations.find(
-        (r) => r.id !== editId && normalizeLookupKey(r.contact) === key
-      );
-      if (duplicate) {
-        showToast(`重复拦截：该号码/电报已被【${duplicate.ownerName}】登记`);
-        return;
-      }
-
       if (editId) {
         const idx = appState.registrations.findIndex((r) => r.id === editId);
         if (idx === -1) return;
         const target = appState.registrations[idx];
-        if (target.ownerId !== user.id && !isSiteOwner(user)) {
+        if (!canViewRegistration(user, target)) {
           showToast('无权限修改他人记录');
           return;
         }
@@ -1805,7 +2452,8 @@ let matched = null;
           contact: contactRaw, channel, status, notes
         };
         appState.registrations[idx] = updatedRecord;
-        await syncRegistrationToCloud(updatedRecord);
+        const syncRes = await syncRegistrationToCloud(updatedRecord);
+        if (syncRes === 'duplicate') { await handleDuplicateRaceAfterSave(); return; }
         showToast('登记记录已更新并同步云端');
       } else {
         const newRecord = {
@@ -1817,7 +2465,8 @@ let matched = null;
           createdAtChina: getChinaTimeString(new Date())
         };
         appState.registrations.unshift(newRecord);
-        await syncRegistrationToCloud(newRecord);
+        const syncRes = await syncRegistrationToCloud(newRecord);
+        if (syncRes === 'duplicate') { await handleDuplicateRaceAfterSave(); return; }
         showToast('新增登记成功并已同步至云端');
       }
 
@@ -1827,13 +2476,22 @@ let matched = null;
       closeSideDrawer();
     }
 
+    async function handleDuplicateRaceAfterSave() {
+      await refreshFromSupabase(true);
+      resetRegistrationForm();
+      renderRecordsList();
+      updateBannerStats();
+      closeSideDrawer();
+      showToast('重复拦截：该号码/电报刚刚已被他人登记，未重复写入，列表已刷新');
+    }
+
     function deleteRegistration(recordId) {
       const user = getCurrentAuthenticatedUser();
-      if (!user) return;
+      if (!user || user.role==='lookup') { showToast('查号员账号仅允许查号'); return; }
       const idx = appState.registrations.findIndex((r) => r.id === recordId);
       if (idx === -1) return;
       const target = appState.registrations[idx];
-      if (target.ownerId !== user.id && !isSiteOwner(user)) {
+      if (!canViewRegistration(user, target)) {
         showToast('只能删除自己名下的登记记录');
         return;
       }
@@ -1866,22 +2524,113 @@ let matched = null;
       return null;
     }
 
-    function extractRowContact(rowObj, colContact, headers) {
-      if (colContact && rowObj[colContact] !== undefined) {
-        const val = String(rowObj[colContact] ?? '').trim();
-        if (normalizeLookupKey(val)) return val;
+    // 联系方式列不应该是这些“看起来带号字，其实不是号码”的列
+    const CONTACT_HEADER_EXCLUDE = ['序号', '类型', '尾号', '后6位', '检索键', '结果', '提示', '日期', '时间', '文件', '批次'];
+
+    // 导入时的联系方式有效性：能标准化，且不是纯数字/下划线的“伪账号”（如序号 1,000）
+    function isImportableContact(value) {
+      const key = normalizeLookupKey(value);
+      if (!key) return false;
+      if (/^tg:[0-9_]+$/.test(key)) return false;
+      return true;
+    }
+
+    function getAllowedChannels() {
+      const sel = document.getElementById('reg-channel');
+      return sel ? Array.from(sel.options).map((o) => o.value) : ['FB', 'TG', 'IG', 'WA'];
+    }
+
+    // 表头不一定在第 1 行（比如前面有标题、说明行）：在前 30 行里找“像表头”的那一行
+    function detectHeaderRowIndex(matrix) {
+      const allCands = Object.values(TEMPLATE_COLUMN_CANDIDATES).flat().map((c) => c.toLowerCase());
+      let best = { idx: 0, score: 0 };
+      const limit = Math.min(matrix.length, 30);
+      for (let i = 0; i < limit; i++) {
+        const cells = (matrix[i] || []).map((c) => String(c ?? '').trim().toLowerCase()).filter(Boolean);
+        if (cells.length < 2) continue;
+        const score = cells.filter((c) =>
+          allCands.some((k) => c === k || (c.length >= 2 && c.length <= 30 && c.includes(k)))
+        ).length;
+        if (score > best.score) best = { idx: i, score };
       }
-      for (const h of headers) {
-        const lower = String(h || '').trim().toLowerCase();
-        if (
-          lower.includes('号') || lower.includes('电报') || lower.includes('tg') ||
-          lower.includes('手机') || lower.includes('电话') || lower.includes('联系') || lower.includes('账号')
-        ) {
-          const v = String(rowObj[h] ?? '').trim();
-          if (normalizeLookupKey(v)) return v;
+      return best.score >= 2 ? best.idx : 0;
+    }
+
+    function matrixToRows(matrix, headerIdx) {
+      const used = new Map();
+      const headers = (matrix[headerIdx] || []).map((h, i) => {
+        let name = String(h ?? '').trim() || `__col${i}`;
+        if (used.has(name)) {
+          const n = used.get(name) + 1;
+          used.set(name, n);
+          name = `${name}_${n}`;
+        } else {
+          used.set(name, 1);
         }
+        return name;
+      });
+      const rows = [];
+      for (let i = headerIdx + 1; i < matrix.length; i++) {
+        const r = matrix[i] || [];
+        if (!r.some((c) => String(c ?? '').trim() !== '')) continue;
+        const obj = {};
+        headers.forEach((h, ci) => { obj[h] = r[ci] ?? ''; });
+        rows.push(obj);
+      }
+      return { headers, rows };
+    }
+
+    // 找出所有可能的联系方式列，并按“最可信”排序：
+    // 先看抽样内容里有多少行真的是号码/账号，再看表头是否精确命中候选名
+    function findContactColumns(headers, rows) {
+      const cands = TEMPLATE_COLUMN_CANDIDATES.contact.map((c) => c.toLowerCase());
+      const sample = rows.slice(0, 300);
+      const scored = [];
+      headers.forEach((h) => {
+        const clean = String(h || '').trim().toLowerCase();
+        if (!clean || CONTACT_HEADER_EXCLUDE.some((k) => clean.includes(k))) return;
+        let rank = cands.indexOf(clean);
+        const exact = rank !== -1;
+        if (!exact) rank = cands.findIndex((c) => clean.includes(c));
+        if (rank === -1) return;
+        const ok = sample.filter((r) => isImportableContact(r[h])).length;
+        const ratio = sample.length ? ok / sample.length : 0;
+        scored.push({ h, exact, rank, ratio });
+      });
+      scored.sort((a, b) =>
+        (Number(b.ratio >= 0.5) - Number(a.ratio >= 0.5)) ||
+        (Number(b.exact) - Number(a.exact)) ||
+        (b.ratio - a.ratio) ||
+        (a.rank - b.rank)
+      );
+      return scored.filter((x) => x.ratio > 0).map((x) => x.h);
+    }
+
+    function extractRowContact(rowObj, contactCols) {
+      for (const col of contactCols) {
+        const val = String(rowObj[col] ?? '').trim();
+        if (isImportableContact(val)) return val;
       }
       return '';
+    }
+
+    // 逐个工作表找：第一个能识别出联系方式列的表就用它
+    function parseWorkbookForImport(workbook) {
+      let fallback = null;
+      for (const sheetName of workbook.SheetNames) {
+        const matrix = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], {
+          header: 1, defval: '', raw: false, blankrows: true
+        });
+        if (!Array.isArray(matrix) || matrix.length === 0) continue;
+        const headerIdx = detectHeaderRowIndex(matrix);
+        const { headers, rows } = matrixToRows(matrix, headerIdx);
+        if (!rows.length) continue;
+        const contactCols = findContactColumns(headers, rows);
+        const parsed = { sheetName, headerRow: headerIdx + 1, headers, rows, contactCols };
+        if (contactCols.length) return parsed;
+        if (!fallback) fallback = parsed;
+      }
+      return fallback;
     }
 
     async function handleExcelFileImport() {
@@ -1900,38 +2649,35 @@ let matched = null;
       try {
         const arrayBuffer = await file.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array', raw: false });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
-        const rows = XLSX.utils.sheet_to_json(worksheet, { defval: '', raw: false });
+        const parsed = parseWorkbookForImport(workbook);
 
-        if (!Array.isArray(rows) || rows.length === 0) {
+        if (!parsed || !parsed.rows.length) {
           showToast('表格中没有检测到有效数据行');
           return;
         }
+        if (!parsed.contactCols.length) {
+          showToast('没有识别到号码/电报账号列，请确认表头里有“号码”“电报”“账号”“联系方式”等列名');
+          return;
+        }
 
-        const headers = Object.keys(rows[0]);
-        const colContact = detectColumnKey(headers, 'contact');
+        const { headers, rows, contactCols } = parsed;
         const colName = detectColumnKey(headers, 'clientName');
         const colChannel = detectColumnKey(headers, 'channel');
         const colStatus = detectColumnKey(headers, 'status');
         const colNotes = detectColumnKey(headers, 'notes');
+        const allowedChannels = getAllowedChannels();
 
         if (cloudReady) await refreshFromSupabase(true);
-
-        const knownKeys = new Set(
-          appState.registrations.map((r) => normalizeLookupKey(r.contact)).filter(Boolean)
-        );
 
         const newlyAdded = [];
         let skippedInvalid = 0;
         let skippedDup = 0;
 
         rows.forEach((row, idx) => {
-          const contact = extractRowContact(row, colContact, headers);
+          const contact = extractRowContact(row, contactCols);
           const key = normalizeLookupKey(contact);
-          if (!key) { skippedInvalid += 1; return; }
-          if (knownKeys.has(key)) { skippedDup += 1; return; }
-          knownKeys.add(key);
+          if (!contact || !key) { skippedInvalid += 1; return; }
+          
 
           const rawName = colName ? String(row[colName] ?? '').trim() : '';
           const rawChannel = colChannel ? String(row[colChannel] ?? '').trim() : '';
@@ -1939,9 +2685,14 @@ let matched = null;
           const rawNotes = colNotes ? String(row[colNotes] ?? '').trim() : '';
 
           const clientName = rawName || user.name || user.username;
-          const channel = rawChannel || 'FB';
+          // 渠道必须是下拉框里有的值；表格里是别的文字（如“完整号码查号表(LQ)”）就记进备注，渠道用默认值
+          const channelOk = allowedChannels.includes(rawChannel);
+          const channel = channelOk ? rawChannel : 'FB';
           const status = ['在聊', '深聊', '断聊'].includes(rawStatus) ? rawStatus : '在聊';
           let notes = rawNotes;
+          if (rawChannel && !channelOk && !notes.includes(rawChannel)) {
+            notes = `来源:${rawChannel}${notes ? ` | ${notes}` : ''}`;
+          }
           if (rawName && !notes.includes(rawName)) {
             notes = `姓名:${rawName}${notes ? ` | ${notes}` : ''}`;
           }
@@ -1957,14 +2708,22 @@ let matched = null;
           newlyAdded.push(item);
         });
 
-        if (newlyAdded.length) await syncBatchRegistrationsToCloud(newlyAdded);
+        let added = newlyAdded.length;
+        if (newlyAdded.length) {
+          const res = await syncBatchRegistrationsToCloud(newlyAdded);
+          if (res.ok && res.ignoredIds.length) {
+            dropIgnoredLocalRecords(res.ignoredIds);
+            added -= res.ignoredIds.length;
+            skippedDup += res.ignoredIds.length;
+          }
+        }
 
         renderRecordsList();
         updateBannerStats();
         fileInput.value = '';
-        const msg = `表格《${file.name}》导入完成：新增 ${newlyAdded.length} 条，跳过重复 ${skippedDup} 条，跳过无效 ${skippedInvalid} 条。`;
+        const msg = `表格《${file.name}》（工作表“${parsed.sheetName}”，表头在第 ${parsed.headerRow} 行，号码列：${contactCols[0]}）导入完成：新增 ${added} 条，跳过重复 ${skippedDup} 条，跳过无效 ${skippedInvalid} 条。`;
         if (summaryEl) summaryEl.textContent = msg;
-        showToast(`成功导入 ${newlyAdded.length} 条表格记录`);
+        showToast(`成功导入 ${added} 条表格记录`);
       } catch (err) {
         showToast('解析表格失败，请确认文件未损坏且为标准 .xlsx/.csv 格式');
       }
@@ -1996,10 +2755,6 @@ let matched = null;
 
       if (cloudReady) await refreshFromSupabase(true);
 
-      const knownKeys = new Set(
-        appState.registrations.map((r) => normalizeLookupKey(r.contact)).filter(Boolean)
-      );
-
       const newlyAdded = [];
       let skippedCount = 0;
 
@@ -2007,8 +2762,7 @@ let matched = null;
         const parts = line.split(/[,，|｜\t]+/).map((s) => s.trim());
         const contact = parts[0] || '';
         const key = normalizeLookupKey(contact);
-        if (!key || knownKeys.has(key)) { skippedCount += 1; return; }
-        knownKeys.add(key);
+        if (!key || !isImportableContact(contact)) { skippedCount += 1; return; }
 
         const channel = parts[1] || 'FB';
         const status = ['在聊', '深聊', '断聊'].includes(parts[2]) ? parts[2] : '在聊';
@@ -2026,12 +2780,20 @@ let matched = null;
         newlyAdded.push(importedItem);
       });
 
-      if (newlyAdded.length) await syncBatchRegistrationsToCloud(newlyAdded);
+      let added = newlyAdded.length;
+      if (newlyAdded.length) {
+        const res = await syncBatchRegistrationsToCloud(newlyAdded);
+        if (res.ok && res.ignoredIds.length) {
+          dropIgnoredLocalRecords(res.ignoredIds);
+          added -= res.ignoredIds.length;
+          skippedCount += res.ignoredIds.length;
+        }
+      }
 
       renderRecordsList();
       updateBannerStats();
       textarea.value = '';
-      showToast(`导入完成：新增 ${newlyAdded.length} 条，跳过重复/无效 ${skippedCount} 条`);
+      showToast(`导入完成：新增 ${added} 条，跳过重复/无效 ${skippedCount} 条`);
     }
 
     function getFilteredRecords() {
@@ -2042,7 +2804,7 @@ let matched = null;
       const statusFilter = document.getElementById('filter-status')?.value || 'ALL';
 
       return appState.registrations.filter((rec) => {
-        if (!ownerFlag && rec.ownerId !== user.id) return false;
+        if (!canViewRegistration(user, rec)) return false;
         if (statusFilter !== 'ALL' && rec.status !== statusFilter) return false;
         if (!keyword) return true;
         const haystack = `${rec.contact} ${rec.clientName} ${rec.ownerName} ${rec.channel} ${rec.status} ${rec.notes}`.toLowerCase();
@@ -2203,7 +2965,7 @@ let matched = null;
                 <span class="px-1.5 py-0.5 rounded border text-[11px] font-semibold ${statusStyle}">${escapeHtml(rec.status)}</span>
                 <span class="text-slate-500 hidden sm:inline">·</span>
                 <span class="text-slate-300 truncate max-w-[140px]">${escapeHtml(rec.clientName)}</span>
-                ${ownerFlag ? `<span class="text-[11px] text-amber-300/85 truncate max-w-[130px]">[${escapeHtml(rec.ownerName)}]</span>` : ''}
+                ${ownerFlag || canManageTeam(user) ? `<span class="text-[11px] text-amber-300/85 truncate max-w-[130px]">[${escapeHtml(rec.ownerName)}]</span>` : ''}
                 <span class="hidden xl:inline text-[11px] text-slate-400 truncate max-w-[200px] cursor-pointer" onclick="toggleRecordRowExpand('${escapeHtml(rec.id)}')">${shortNotePreview}</span>
               </div>
 
@@ -2319,14 +3081,26 @@ let matched = null;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      const lookupInput = document.getElementById('lookup-query-input');
+      if (lookupInput) lookupInput.addEventListener('input', handleLookupInput);
       try {
+        const main=document.getElementById('workspace-main-content');
+        const recordsCard=document.getElementById('records-panel-card');
+        if(recordsCard) recordsCard.classList.remove('hidden');
+        openSideDrawer('records');
         refreshFromSupabase(true).finally(() => {
           initialCloudLoad = false;
           renderRecordsList();
         });
         setInterval(() => {
+          if (document.hidden) return;
           if (getCurrentAuthenticatedUser()) refreshFromSupabase(true);
-        }, 25000);
+        }, 60000);
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) return;
+          if (Date.now() - lastRefreshAt < 15000) return;
+          if (getCurrentAuthenticatedUser()) refreshFromSupabase(true);
+        });
       } catch (err) {
         initialCloudLoad = false;
         updateConnectionIndicators(false, '数据模式：当前使用浏览器本地存储（稳定可用）');
